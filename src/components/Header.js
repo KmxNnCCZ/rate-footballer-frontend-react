@@ -67,7 +67,7 @@ export const Header = () => {
             <Menu>
               {({ isOpen }) => (
                 <>
-                  <MenuButton isActive={isOpen} height="10%">
+                  <MenuButton height="10%">
                   {isOpen ? <SmallCloseIcon /> : <HamburgerIcon />}
                   </MenuButton>
                   <MenuList>
