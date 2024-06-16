@@ -20,7 +20,8 @@ function App() {
       minHeight="100vh"
     >
       <Header />
-      <Body>
+      <Body
+      >
         <Routes>
           <Route path="/" element={ <Top /> }></Route>
           <Route path="login" element={ <Login /> }></Route>

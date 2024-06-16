@@ -4,7 +4,8 @@ export const Body = ({ children }) => {
   return (
     <Box 
       flex="1" //bodyが短い際に、footerをページの下部に固定するため
-      pt="100px"  //固定したヘッダーとbodyが被らないようにするため
+      pt="100px"  //固定したヘッダーの下からbodyが始まるようにするため
+      as="main"
     >
       {children}
     </Box>

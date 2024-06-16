@@ -44,6 +44,7 @@ export const Header = () => {
       bg="#89DA59"
       top={0}
       position="fixed"
+      zIndex="1000" // ヘッダーが上に来るようにするため
     >
       <Flex
         justifyContent="space-between"
