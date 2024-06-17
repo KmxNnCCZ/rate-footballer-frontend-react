@@ -11,6 +11,7 @@ import { Top } from './routes/Top';
 import { Login } from './routes/Login';
 import { SignUp } from './routes/SignUp';
 import { Notfound } from './routes/Notfound';
+import { Matches } from './routes/Matches.js';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={ <Top /> }></Route>
           <Route path="login" element={ <Login /> }></Route>
           <Route path="signUp" element={ <SignUp /> }></Route>
+          <Route path="matches" element={ <Matches /> }></Route>
           <Route path="*" element={ <Notfound /> } />
         </Routes>
       </Body>
