@@ -72,8 +72,8 @@ export const Header = () => {
                   {isOpen ? <SmallCloseIcon /> : <HamburgerIcon />}
                   </MenuButton>
                   <MenuList>
-                    <MenuItem><Link to="#">採点一覧</Link></MenuItem>
-                    <MenuItem><Link to="#">試合一覧</Link></MenuItem>
+                    <Link to="#"><MenuItem>採点一覧</MenuItem></Link>
+                    <Link to="matches"><MenuItem>試合一覧</MenuItem></Link>
                     {loggedIn ? (
                       <>
                         <Link to="#"><MenuItem>ランキング</MenuItem></Link>
