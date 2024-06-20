@@ -56,11 +56,7 @@ export const Login = () => {
   }, [navigate]);
 
   return (
-    <Box 
-      w="80%"
-      mx="auto"
-      mt="50px"
-    >
+    <Box border="1px">
       <Text textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="50px">
         ログインページ
       </Text>
