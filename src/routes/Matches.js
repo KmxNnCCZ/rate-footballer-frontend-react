@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { getMatch } from "../lib/api/getMatchList";
+import { Link } from "react-router-dom";
+import { getMatchList } from "../lib/api/getMatch";
 
 import { 
   Text,
@@ -20,16 +21,16 @@ export const Matches = () => {
 
   const matchdays = [...Array(38)].map((_, i) => i+1)
 
-  const fetchMatchData = async (season, matchday) => {
+  const fetchMatchesData = async (season, matchday) => {
     const params = {season, matchday};
-    const res = await getMatch(params)
+    const res = await getMatchList(params)
     setRes(res.data);
   }
 
 
   useEffect(() => {
    if (season !== null && selectedMatchDay !== null) {
-    fetchMatchData(season, selectedMatchDay);
+    fetchMatchesData(season, selectedMatchDay);
    }
   }, [season, selectedMatchDay]);
 
@@ -54,9 +55,14 @@ export const Matches = () => {
             </option>
           ))}
         </Select>
-        <Select placeholder={`第${selectedMatchDay}節`} width="300px" mb="10px" onChange={(e) => onMatchdaySelectChange(e.target.value[1])}>
+        <Select 
+          placeholder={`第${selectedMatchDay}節`}
+          width="300px"
+          mb="10px"
+          onChange={(e) => onMatchdaySelectChange(e.target.value)}
+        >
           {matchdays.map((day) => (
-            <option key={day} value={`第${day}節`}>
+            <option key={day} value={day}>
               {`第${day}節`}
             </option>
           ))}
@@ -67,8 +73,10 @@ export const Matches = () => {
           justifyItems="center"
           >
           {res.map((data) => (
-            <GridItem>
-              <MatchCard key={data.id} matchData={data}/>
+            <GridItem key={data.id}>
+              <Link to={`${data.matchApiId}`}>
+                <MatchCard matchData={data}/>
+              </Link>
             </GridItem>
           ))}
         </Grid>
