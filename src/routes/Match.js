@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
-import { getMatch } from "../lib/api/getMatch";
-
 import { 
   Text,
   Box,
   Flex,
   Image,
   Heading,
-  Table,
-  Tr,
-  Td,
   Grid,
   GridItem,
 } from "@chakra-ui/react";
+
+import { getMatch } from "../lib/api/getMatch";
+import { MatchPlayers } from "../components/MatchPlayers";
+import { Loading } from "../components/Loading";
 
 
 
@@ -27,11 +26,11 @@ export const Match = () => {
     const fetchMatch = async () => {
       try {
         const res = await getMatch(matchId);
-        console.log(JSON.stringify(res, null, 2));
+        // console.log(JSON.stringify(res, null, 2));
         setMatchData(res.data);
         setLoading(false); // データの読み込みが完了
       } catch (error) {
-        console.error("Error fetching match:", error);
+        // console.error("Error fetching match:", error);
         setLoading(false); // エラーが発生してもローディングを終了する
       }
     };
@@ -39,15 +38,19 @@ export const Match = () => {
     fetchMatch();
   }, [matchId]);
 
+  // データが読み込まれるまでローディングを表示
   if (loading) {
-    return <div>Loading...</div>; // データが読み込まれるまでローディングを表示
-  }
+    return (
+      <Loading />
+    );
+  };
 
   const matchday = `第${matchData.matchday}節`;
   const formattedDate = (inputDate) => {
     const date = new Date(inputDate);
     return `${date.getMonth() + 1}月${date.getDate()}日`;
   }
+
 
   return (
     <Box>
@@ -60,14 +63,14 @@ export const Match = () => {
         <Text fontSize='md'>{matchData.venue}</Text>
       </Flex>
 
-      <Box width="80%" mx="auto"> {/* スコアボード */}
-        <Flex justifyContent="space-between" mx="50px" my="10px">
-          <Box>{/* ホームチーム情報 */}
-            <Image src={matchData.homeTeam.crest} alt={matchData.homeTeam.name} height="170px" width="170px"/>
-            <Text textAlign="center" fontSize='lg'>{matchData.homeTeam.name}</Text>
-          </Box>
+      <Box mx="auto"> {/* スコアボード */}
+        <Grid templateColumns="1fr 1fr 1fr">
+          <GridItem>{/* ホームチーム情報 */}
+            <Image src={matchData.homeTeam.crest} alt={matchData.homeTeam.name} height="170px" width="170px" mx="auto"/>
+            <Text textAlign="center" fontSize='lg' w="100%">{matchData.homeTeam.name}</Text>
+          </GridItem>
 
-          <Box mt="50px">{/* スコア詳細 */}
+          <GridItem mt="50px">{/* スコア詳細 */}
             <Grid templateColumns="1fr 3fr 1fr" placeContent="center" placeItems="center" gap="3">
               <GridItem mr="5px">
                 <Text as='b' fontSize='3xl'>{matchData.score.fullTime.home}</Text>
@@ -90,55 +93,25 @@ export const Match = () => {
                 </Grid>
               </GridItem>
               <GridItem ml="5px">
-                <Text as='b' fontSize='3xl'>{matchData.score.fullTime.away}</Text>
+                <Text as='b' fontSize='3xl' >{matchData.score.fullTime.away}</Text>
               </GridItem>
             </Grid>
-          </Box>
+          </GridItem>
 
-          <Box> {/* アウェイチーム情報 */}
-            <Image src={matchData.awayTeam.crest} alt={matchData.awayTeam.name} height="170px" width="170px"/>
-            <Text textAlign="center" fontSize='lg'>{matchData.awayTeam.name}</Text>
-          </Box>
-          </Flex>
+          <GridItem> {/* アウェイチーム情報 */}
+            <Image src={matchData.awayTeam.crest} alt={matchData.awayTeam.name} height="170px" width="170px" mx="auto"/>
+            <Text textAlign="center" fontSize='lg' w="100%">{matchData.awayTeam.name}</Text>
+          </GridItem>
+          </Grid>
       </Box>
 
-      <Box> {/* 選手ラインナップ */}
-        <Flex>
-          <Table>
-            <Tr>
-              <Td></Td>
-              <Td></Td>
-              <Td></Td>
-              <Td></Td>
-            </Tr>
-            <Tr></Tr>
-            <Tr></Tr>
-          </Table>
-          <Table></Table>
+      <Box mt="30px"> {/* 選手ラインナップ */}
+        <Flex justifyContent="space-between">
+          <MatchPlayers lineup={matchData.homeTeam.lineup} team={"home"}/>
+          <MatchPlayers lineup={matchData.awayTeam.lineup} team={"away"}/>
         </Flex>
       </Box>
-
-{/*  */}
 
     </Box>
   )
 }
-
-{/* <div>
-      <h1>試合詳細</h1>
-      <p>Match ID: {matchId}</p>
-      <div>
-        <p>utcDate: {matchInformation.utcDate}</p>
-        <p>venue: {matchInformation.venue}</p>
-        <p>matchday: {matchInformation.matchday}</p>
-        <p>homeTeam: {matchInformation.homeTeam.name}</p>
-        <p>homeTeamCrest: {matchInformation.homeTeam.crest}</p>
-        {matchInformation.homeTeam.lineup.map((player) => (
-          <div key={player.id}>
-            <p>{player.name}</p>
-            <p>Position: {player.position}</p>
-            <p>Shirt Number: {player.shirtNumber}</p>
-          </div>
-        ))}
-      </div>
-    </div> */}
