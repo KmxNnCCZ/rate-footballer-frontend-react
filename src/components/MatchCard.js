@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { getTeam } from '../lib/api/getTeam.js'
 
 export const MatchCard = ({ matchData }) => {
-  console.log(matchData);
+  // console.log(matchData);
   const [homeTeam, setHomeTeam] = useState({});
   const [awayTeam, setAwayTeam] = useState({});
 

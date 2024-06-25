@@ -12,6 +12,7 @@ import { Login } from './routes/Login';
 import { SignUp } from './routes/SignUp';
 import { Notfound } from './routes/Notfound';
 import { Matches } from './routes/Matches.js';
+import { Match } from './routes/Match.js';
 import { Test } from './routes/Test.js';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="login" element={ <Login /> }></Route>
           <Route path="signUp" element={ <SignUp /> }></Route>
           <Route path="matches" element={ <Matches /> }></Route>
+          <Route path="/matches/:matchId" element={ <Match /> }></Route>
           <Route path="test" element={ <Test /> }></Route>
           <Route path="*" element={ <Notfound /> } />
         </Routes>

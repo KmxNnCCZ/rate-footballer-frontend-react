@@ -9,6 +9,7 @@ export const Body = ({ children }) => {
       my="50px"
       width="80%"
       mx="auto"
+      maxW="1000px"
     >
       {children}
     </Box>
