@@ -14,6 +14,7 @@ import {
 import { getMatch } from "../lib/api/getMatch";
 import { MatchPlayers } from "../components/MatchPlayers";
 import { Loading } from "../components/Loading";
+import formattedDate from "../lib/formattedDate";
 
 
 
@@ -46,10 +47,6 @@ export const Match = () => {
   };
 
   const matchday = `第${matchData.matchday}節`;
-  const formattedDate = (inputDate) => {
-    const date = new Date(inputDate);
-    return `${date.getMonth() + 1}月${date.getDate()}日`;
-  }
 
 
   return (
