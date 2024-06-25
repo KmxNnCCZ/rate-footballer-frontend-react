@@ -81,7 +81,7 @@ export const Matches = () => {
             justifyItems="center"
             >
             {res.map((data) => (
-              <GridItem key={data.match.id}>
+              <GridItem key={data.match.matchApiId}>
                 <Link to={`${data.match.matchApiId}`}>
                   <MatchCard matchData={data.match} homeTeam={data.homeTeamData} awayTeam={data.awayTeamData}/>
                 </Link>

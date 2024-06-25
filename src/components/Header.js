@@ -98,7 +98,7 @@ export const Header = () => {
               gap="20px"
             >
               <Link to="#">採点一覧</Link>
-              <Link to="#">試合一覧</Link>
+              <Link to="matches">試合一覧</Link>
               {loggedIn ? (
                 <>
                   <Link to="#">ランキング</Link>
