@@ -10,31 +10,10 @@ import {
   GridItem
 } from "@chakra-ui/react";
 
-import { useEffect, useState } from "react";
+import formattedDate from "../lib/formattedDate";
 
-import { getTeam } from '../lib/api/getTeam.js'
-
-export const MatchCard = ({ matchData }) => {
-  // console.log(matchData);
-  const [homeTeam, setHomeTeam] = useState({});
-  const [awayTeam, setAwayTeam] = useState({});
-
-  useEffect(() => {
-    const f = async () => {
-      const homeTeamRes = await getTeam(matchData.homeTeamId);
-      const awayTeamRes = await getTeam(matchData.awayTeamId);
-      setHomeTeam(homeTeamRes.data);
-      setAwayTeam(awayTeamRes.data);
-    }
-    f();
-   }, [matchData.homeTeamId, matchData.awayTeamId]);
-
-   const matchday = `第${matchData.matchday}節`;
-
-   const formattedDate = (inputDate) => {
-    const date = new Date(inputDate);
-    return `${date.getMonth() + 1}月${date.getDate()}日`;
-  }
+export const MatchCard = ({ matchData, homeTeam, awayTeam }) => {
+  const matchday = `第${matchData.matchday}節`;
 
   const result = `${matchData.homeTeamScore} - ${matchData.awayTeamScore}`
 
