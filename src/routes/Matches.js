@@ -28,7 +28,6 @@ export const Matches = () => {
     const params = {season, matchday};
     const res = await getMatchList(params)
     setLoading(false)
-    console.log(res.data);
     setRes(res.data);
   }
 
@@ -62,21 +61,15 @@ export const Matches = () => {
           ))}
         </Select>
         <Select 
-          // placeholder={`第${selectedMatchDay}節`}
           width="300px"
           mb="10px"
+          value={selectedMatchDay}
           onChange={(e) => onMatchdaySelectChange(e.target.value)}
         >
           {matchdays.map((matchday) => (
-            (matchday === selectedMatchDay ?
-              <option key={matchday} value={matchday} selected>
-              {`第${matchday}節`}
-            </option>
-              :
-              <option key={matchday} value={matchday} >
-              {`第${matchday}節`}
-            </option>
-            )
+            <option key={matchday} value={matchday} >
+            {`第${matchday}節`}
+          </option>
           ))}
         </Select>
         {loading ?
