@@ -19,14 +19,16 @@ import formattedDate from "../lib/formattedDate";
 
 
 export const Match = () => {
-  const { matchId } = useParams();
+  const { matchApiId } = useParams();
   const [matchData, setMatchData] = useState({});
   const [loading, setLoading] = useState(true); // 読み込み状態を管理するstate
+
+  const matchday = `第${matchData.matchday}節`;
 
   useEffect(() => {
     const fetchMatch = async () => {
       try {
-        const res = await getMatch(matchId);
+        const res = await getMatch(matchApiId);
         // console.log(JSON.stringify(res, null, 2));
         setMatchData(res.data);
         setLoading(false); // データの読み込みが完了
@@ -37,7 +39,7 @@ export const Match = () => {
     };
 
     fetchMatch();
-  }, [matchId]);
+  }, [matchApiId]);
 
   // データが読み込まれるまでローディングを表示
   if (loading) {
@@ -46,9 +48,6 @@ export const Match = () => {
     );
   };
 
-  const matchday = `第${matchData.matchday}節`;
-
-
   return (
     <Box>
       <Heading textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="20px"> {/* タイトル */}
@@ -56,18 +55,18 @@ export const Match = () => {
       </Heading>
 
       <Flex mb="30px" width="80%" mx="auto"> {/* 日付場所 */}
-        <Text mr="10px" fontSize='md'>{formattedDate(matchData.utcDate)}</Text>
-        <Text fontSize='md'>{matchData.venue}</Text>
+        <Text mr="10px" fontSize='xs'>{formattedDate(matchData.utcDate)}</Text>
+        <Text fontSize='xs'>{matchData.venue}</Text>
       </Flex>
 
-      <Box mx="auto"> {/* スコアボード */}
+      <Box mx="auto" py="20px" boxShadow="0px 2px 8px rgba(0, 0, 0, 0.1)"> {/* スコアボード */}
         <Grid templateColumns="1fr 1fr 1fr">
           <GridItem>{/* ホームチーム情報 */}
             <Image src={matchData.homeTeam.crest} alt={matchData.homeTeam.name} height="170px" width="170px" mx="auto"/>
             <Text textAlign="center" fontSize='lg' w="100%">{matchData.homeTeam.name}</Text>
           </GridItem>
 
-          <GridItem mt="50px">{/* スコア詳細 */}
+          <GridItem mt="50px" >{/* スコア詳細 */}
             <Grid templateColumns="1fr 3fr 1fr" placeContent="center" placeItems="center" gap="3">
               <GridItem mr="5px">
                 <Text as='b' fontSize='3xl'>{matchData.score.fullTime.home}</Text>
@@ -104,8 +103,8 @@ export const Match = () => {
 
       <Box mt="30px"> {/* 選手ラインナップ */}
         <Flex justifyContent="space-between">
-          <MatchPlayers lineup={matchData.homeTeam.lineup} team={"home"}/>
-          <MatchPlayers lineup={matchData.awayTeam.lineup} team={"away"}/>
+          <MatchPlayers lineup={matchData.homeTeam.lineup} team={"home"} matchApiId={matchApiId}/>
+          <MatchPlayers lineup={matchData.awayTeam.lineup} team={"away"} matchApiId={matchApiId}/>
         </Flex>
       </Box>
 

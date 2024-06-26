@@ -14,6 +14,7 @@ import { Notfound } from './routes/Notfound';
 import { Matches } from './routes/Matches.js';
 import { Match } from './routes/Match.js';
 import { Test } from './routes/Test.js';
+import { Rate } from './routes/Rate.js';
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
           <Route path="login" element={ <Login /> }></Route>
           <Route path="signUp" element={ <SignUp /> }></Route>
           <Route path="matches" element={ <Matches /> }></Route>
-          <Route path="/matches/:matchId" element={ <Match /> }></Route>
+          <Route path="/matches/:matchApiId" element={ <Match /> }></Route>
+          <Route path="/matches/:matchApiId/rate" element={ <Rate /> }></Route>
           <Route path="test" element={ <Test /> }></Route>
           <Route path="*" element={ <Notfound /> } />
         </Routes>

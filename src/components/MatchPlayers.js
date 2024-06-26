@@ -7,34 +7,23 @@ import {
   Tbody
 } from "@chakra-ui/react";
 
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import positionShortName from "../lib/PositionShortNames";
 
 
-export const MatchPlayers = ({ lineup, team }) => {
-  const path = `/rate?team=${team}`
-  const pos = {
-    "Attacking Midfield": "AM",
-    "Left-Back": "LB",
-    "Forward": "FW",
-    "Defence": "DF",
-    "Defensive Midfield": "DM",
-    "Offence": "FW",
-    "Goalkeeper": "GK",
-    "Centre-Forward": "CF",
-    "Centre-Back": "CB",
-    "Central Midfield": "CM",
-    "Left Winger": "LWG",
-    "Midfielder": "MF",
-    "Defender": "DF",
-   " Right Winger": "RWG",
-    "Right-Back": "RB",
-   " Midfield": "MF",
+export const MatchPlayers = ({ lineup, team, matchApiId}) => {
+  const path = `rate?team=${team}`
+  const navigate = useNavigate();
+
+  const navigateToRatePage = () => {
+    navigate(path)
   }
+
   return (
-    <Box width="40%" textAlign="center"> {/* ホームチーム */}
+    <Box width="45%" textAlign="center" boxShadow="0px 2px 8px rgba(0, 0, 0, 0.1)"> {/* ホームチーム */}
       <Button 
         as='button'
-        mb="20px"
+        my="20px"
         w="80%"
         h="70px"
         color="#89DA59"
@@ -43,14 +32,15 @@ export const MatchPlayers = ({ lineup, team }) => {
         borderRadius="50px"
         borderWidth="4px"
         _hover={{ bg: '#89DA59', color: "white" }}
+        onClick={navigateToRatePage}
       >
-        <Link to={path}>採点する</Link>
+        採点する
       </Button>
       <Table>
         <Tbody>
           {lineup.map((player) => (
             <Tr key={player.id}>
-              <Td fontSize='xs' textAlign="center">{pos[player.position]}</Td>
+              <Td fontSize='xs' textAlign="center">{positionShortName[player.position]}</Td>
               <Td fontSize='xs' textAlign="center">{player.shirtNumber}</Td>
               <Td fontSize='xs' whiteSpace="nowrap">{player.name}</Td>
             </Tr>
