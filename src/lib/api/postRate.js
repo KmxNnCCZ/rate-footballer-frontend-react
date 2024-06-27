@@ -23,6 +23,5 @@ export const postRate = (matchApiId, team, playerRates) => {
   };
 
   const params = { matchApiId, team, playerRates };
-  console.log(params);
   return  client.post("rates", params, { headers });
 }
