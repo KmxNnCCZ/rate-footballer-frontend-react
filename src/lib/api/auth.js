@@ -61,5 +61,7 @@ export const getUser = async() => {
   };
 
   // ユーザー情報を取得
-  return client.get("/auth/sessions", { headers });
+  const res = await client.get("/auth/sessions", { headers });
+  console.log(res);
+  return res
 };

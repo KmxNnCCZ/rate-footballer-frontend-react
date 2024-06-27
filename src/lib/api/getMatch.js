@@ -11,6 +11,10 @@ export const getMatchList = (params) => {
   return  client.get("matches", { params });
 }
 
-export const getMatch = (matchId) => {
-  return client.get(`matches/${matchId}`);
+export const getMatch = (matchApiId) => {
+  return client.get(`matches/${matchApiId}`);
+}
+
+export const getTeam = (matchApiId, team) => {
+  return client.get(`matches/${matchApiId}?team=${team}`);
 }
