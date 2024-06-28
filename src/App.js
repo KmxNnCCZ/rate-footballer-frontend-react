@@ -15,6 +15,7 @@ import { Matches } from './routes/Matches.js';
 import { Match } from './routes/Match.js';
 import { Test } from './routes/Test.js';
 import { Rate } from './routes/Rate.js';
+import { Rates } from './routes/Rates.js';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="matches" element={ <Matches /> }></Route>
           <Route path="/matches/:matchApiId" element={ <Match /> }></Route>
           <Route path="/matches/:matchApiId/rate" element={ <Rate /> }></Route>
+          <Route path="rates" element={ <Rates /> }></Route>
           <Route path="test" element={ <Test /> }></Route>
           <Route path="*" element={ <Notfound /> } />
         </Routes>

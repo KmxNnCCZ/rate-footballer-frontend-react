@@ -72,7 +72,7 @@ export const Header = () => {
                   {isOpen ? <SmallCloseIcon /> : <HamburgerIcon />}
                   </MenuButton>
                   <MenuList>
-                    <Link to="#"><MenuItem>採点一覧</MenuItem></Link>
+                    <Link to="rates"><MenuItem>採点一覧</MenuItem></Link>
                     <Link to="matches"><MenuItem>試合一覧</MenuItem></Link>
                     {loggedIn ? (
                       <>
@@ -97,7 +97,7 @@ export const Header = () => {
               alignItems="center" 
               gap="20px"
             >
-              <Link to="#">採点一覧</Link>
+              <Link to="rates">採点一覧</Link>
               <Link to="matches">試合一覧</Link>
               {loggedIn ? (
                 <>
