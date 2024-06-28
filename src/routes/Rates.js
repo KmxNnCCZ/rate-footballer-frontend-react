@@ -27,7 +27,7 @@ export const Rates = () => {
 
   const fetchCurrentUser = async () => {
     const user = await getUser();
-    if (user) {
+    if (user.data.isLogin) {
       setCurrentUserId(user.data.data.id)
     }
   };
