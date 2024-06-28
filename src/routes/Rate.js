@@ -22,7 +22,7 @@ import { getTeam } from "../lib/api/getMatch";
 import { Loading } from "../components/Loading";
 import positionShortName from "../lib/PositionShortNames";
 import { getUser } from "../lib/api/auth";
-import { postRate } from "../lib/api/postRate";
+import { postRate } from "../lib/api/rate";
 
 export const Rate = () => {
   const { matchApiId } = useParams();

@@ -7,9 +7,9 @@ export const Body = ({ children }) => {
       pt="100px"  //固定したヘッダーの下からbodyが始まるようにするため
       as="main"
       my="50px"
-      width="80%"
+      width="90%"
       mx="auto"
-      maxW="1000px"
+      // maxW="1200px"
     >
       {children}
     </Box>
