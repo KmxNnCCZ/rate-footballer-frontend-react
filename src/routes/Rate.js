@@ -12,21 +12,19 @@ import {
 } from "@chakra-ui/react";
 
 import { getTeam } from "../lib/api/getMatch";
-import { getUser } from "../lib/api/auth";
 import { postRate } from "../lib/api/rate";
 import { Loading } from "../components/Loading";
 import { PlayerRatingItem } from "../components/PlayerRatingItem";
 import { LoginRequiredMessage } from "../components/LoginRequiredMessage";
 
 
-export const Rate = () => {
+export const Rate = ({ isLoggedIn }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
 
   const { matchApiId } = useParams();
   const [teamData, setTeamData] = useState({});
   const [loading, setLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const [playerRates, setPlayerRates] = useState([]);
@@ -54,15 +52,7 @@ export const Rate = () => {
       }
     };
 
-    const fetchCurrentUser = async () => {
-      const user = await getUser();
-      if (user) {
-        setIsLoggedIn(user.data.isLogin)
-      }
-    };
-
     fetchMatch();
-    fetchCurrentUser();
   }, [matchApiId, team]);
 
   const incrementScore = (i) => {

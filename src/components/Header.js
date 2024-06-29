@@ -1,6 +1,4 @@
-import  { useState, useEffect } from 'react';
-
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import {
   Box,
@@ -10,41 +8,114 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  Hide
+  Hide,
+  Button,
+  Text
 } from '@chakra-ui/react';
 import { HamburgerIcon, SmallCloseIcon } from '@chakra-ui/icons';
 
-import { getUser, signOut } from '../lib/api/auth.js'
+import { signOut } from '../lib/api/auth.js'
 
-export const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+const HeaderItem = ({children, itemPath, }) => {
+  const currentPath = useLocation().pathname;
+  return (
+    <Link to={itemPath}>
+      <Box
+        _hover={{
+          visibility: "visible",
+          bottom: "12px",
+          opacity: "1",
+        }}
+      >
+        {currentPath === itemPath ? 
+          <Text 
+            as="b"
+            color="#89DA59"
+          >
+            {children}
+            </Text>
+          :
+          <Text
+          as="b"
+          position="relative"
+          _after={{
+            content: '""',
+            position: "absolute",
+            left: "0",
+            width: "100%",
+            height: "3px",
+            background: "#89DA59", //線の色
+            bottom: "0px", // 線をテキストの下に配置
+            opacity: "0",
+            visibility: "hidden",
+            transition: "all 0.3s ease-in-out", // アニメーション
+          }}
+          _hover={{
+            _after: {
+              visibility: "visible",
+              bottom: "-5px", // ホバー時の線の位置を調整
+              opacity: "1",
+            },
+          }}
+        >
+            {children}
+          </Text>
+        }
+      </Box>
+    </Link>
+  )
+};
 
-  useEffect(() => {
-    const checkLoggedInStatus = async() => {
-      try {
-        const res = await getUser();
-          if (res && res.data.isLogin) {
-            setLoggedIn(true);
-          } else {
-            setLoggedIn(false);
-          }
-      } catch (e) {
-        console.log(e);
+const CustomButton = ({children, itemPath}) => {
+  const currentPath = useLocation().pathname;
+  return (
+    <Link to={itemPath}>
+      {currentPath === itemPath ? 
+        <Button
+        as='button'
+        my="20px"
+        h="60px"
+        color="white"
+        bg="#89DA59"
+        borderColor='#89DA59'
+        borderRadius="50px"
+        borderWidth="4px"
+        _hover={{ bg: '#89DA59', color: "white" }}
+        >
+          {children}
+        </Button>
+      :
+        <Button 
+        as='button'
+        my="20px"
+        h="60px"
+        color="#89DA59"
+        bg="white"
+        borderColor='#89DA59'
+        borderRadius="50px"
+        borderWidth="4px"
+        _hover={{ bg: '#89DA59', color: "white" }}
+      >
+        {children}
+      </Button>
       }
-    };
+    </Link>
+  )
+}
 
-    checkLoggedInStatus();
-  }, []);
+
+export const Header = ({isLoggedIn, setIsLoggedIn}) => {
 
   return (
     <Box
       as="header"
       width="full"
       height="100px"
-      bg="#89DA59"
+      bg="#FFF"
       top={0}
       position="fixed"
       zIndex="1000" // ヘッダーが上に来るようにするため
+      boxShadow="0 0 10px rgba(0, 0, 0, .26);"
     >
       <Flex
         justifyContent="space-between"
@@ -74,7 +145,7 @@ export const Header = () => {
                   <MenuList>
                     <Link to="rates"><MenuItem>採点一覧</MenuItem></Link>
                     <Link to="matches"><MenuItem>試合一覧</MenuItem></Link>
-                    {loggedIn ? (
+                    {isLoggedIn ? (
                       <>
                         <Link to="#"><MenuItem>ランキング</MenuItem></Link>
                         <Link to="#"><MenuItem>マイページ</MenuItem></Link>
@@ -82,8 +153,12 @@ export const Header = () => {
                       </>
                     ) : (
                       <>
-                        <Link to="signUp"><MenuItem>新規登録</MenuItem></Link>
-                        <Link to="login"><MenuItem>ログインページ</MenuItem></Link>
+                        <Link to="signUp">
+                          <MenuItem>
+                            新規登録
+                          </MenuItem>
+                        </Link>
+                        <Link to="login"><MenuItem>ログイン</MenuItem></Link>
                       </>
                     )}
                   </MenuList>
@@ -97,18 +172,28 @@ export const Header = () => {
               alignItems="center" 
               gap="20px"
             >
-              <Link to="rates">採点一覧</Link>
-              <Link to="matches">試合一覧</Link>
-              {loggedIn ? (
+              <HeaderItem itemPath="/rates">
+                採点一覧
+              </HeaderItem>
+              <HeaderItem itemPath="/matches">
+                試合一覧
+              </HeaderItem>
+              {isLoggedIn ? (
                 <>
-                  <Link to="#">ランキング</Link>
-                  <Link to="#">マイページ</Link>
-                  <Link to="" onClick={signOut}>ログアウト</Link>
+                  <HeaderItem itemPath="#">ランキング</HeaderItem>
+                  <HeaderItem itemPath="#">マイページ</HeaderItem>
+                  <Box onClick={() => signOut(setIsLoggedIn)}>
+                    <CustomButton itemPath="">ログアウト</CustomButton>
+                  </Box>
                 </>
               ) : (
                 <>
-                  <Link to="signUp">新規登録</Link>
-                  <Link to="login">ログイン</Link>
+                <CustomButton itemPath={"/signup"}>
+                  新規登録
+                </CustomButton>
+                <CustomButton itemPath={"/login"}>
+                  ログイン
+                </CustomButton>
                 </>
               )}
             </Flex>
@@ -118,3 +203,6 @@ export const Header = () => {
     </Box>
   )
 }
+
+
+
