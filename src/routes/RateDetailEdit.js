@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Text,
   Box,
@@ -12,50 +12,46 @@ import {
 } from "@chakra-ui/react";
 
 import { useUser } from "../contexts/UserContext";
-import { getTeam } from "../lib/api/fetchMatch";
-import { postRate } from "../lib/api/fetchRate";
+import { editRate } from "../lib/api/fetchRate";
+import { putRate } from "../lib/api/fetchRate";
 import { Loading } from "../components/Loading";
 import { PlayerRatingItem } from "../components/PlayerRatingItem";
 import { LoginRequiredMessage } from "../components/LoginRequiredMessage";
 
 
-export const Rate = () => {
+export const RateDetailEdit = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
-
-  const { matchApiId } = useParams();
-  const { isLoggedIn } = useUser();
-  const [teamData, setTeamData] = useState({});
+  const { currentUser, isLoggedIn } = useUser();
+  const [rate, setRate] = useState();
   const [loading, setLoading] = useState(true);
+
+  const { rateId } = useParams();
   const navigate = useNavigate();
 
   const [playerRates, setPlayerRates] = useState([]);
 
-  const query = new URLSearchParams(useLocation().search);
-  const team = query.get('team');
-
-  const matchday = `第${teamData.matchday}節`;
+  useEffect(() => {
+    const fetchEditRateData = async () => {
+      const res = await editRate(rateId);
+      setRate(res.data);
+      const initialPlayerRates = res.data.scores.map(player => ({
+        playerId: player.playerId,
+        score: player.score,
+        assessment: player.assessment
+      }));
+      setPlayerRates(initialPlayerRates);
+      setLoading(false);
+    };
+    fetchEditRateData()
+  }, [rateId]);
 
   useEffect(() => {
-    const fetchMatch = async () => {
-      try {
-        const res = await getTeam(matchApiId, team);
-        setTeamData(res.data);
-        const initialPlayerRates = res.data.lineup.map(player => ({
-          playerApiId: player.id,
-          score: 5.0,
-          assessment: ""
-        }));
-        setPlayerRates(initialPlayerRates);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching match:", error);
-        setLoading(false);
-      }
-    };
+    if (!loading && currentUser && rate && currentUser.id !== rate.userId) {
+      navigate('/');
+    }
+  }, [loading, isLoggedIn, currentUser, rate, navigate]);
 
-    fetchMatch();
-  }, [matchApiId, team]);
 
   const incrementScore = (i) => {
     setPlayerRates((prevPlayerRates) => {
@@ -93,56 +89,56 @@ export const Rate = () => {
     });
   };
 
-  const postRateData = async () => {
-    if(isLoggedIn) {
-      await postRate(matchApiId, team, playerRates);
-      navigate("/rates");
-    }
+  const putRateData = async () => {
+    await putRate(rate.matchApiId, rate.teamId, playerRates, rateId);
+    navigate(`/rates/${rateId}`);
   };
 
   if (loading) {
     return <Loading />;
   }
 
+  const matchDate = `PL ${rate.season} 第${rate.matchday}節`;
+
   return (
     <Box>
       <Flex width={{ base: "100%", md: "60%" }} flexDirection={{ base: "column", md: "row" }} alignItems="center" justifyContent="center" mb="30px" mx="auto">
         <Heading textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mr={{ base: "0px", md: "10px" }}>
-          プレミアリーグ {matchday}
+          {matchDate}
         </Heading>
         <Heading textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold">
-          {teamData.name} 採点
+          {rate.teamName} 編集ページ
         </Heading>
       </Flex>
 
       <Flex justifyContent="space-around" alignItems="center" mx="auto" px="30px" mb="80px">
         <Box>
-          <Image src={teamData.crest} alt={teamData.name} height="100px" width="100px" mx="auto" />
+          <Image src={rate.teamCrestUrl} alt={rate.teamName} height="100px" width="100px" mx="auto" />
         </Box>
-        <Text as='b' fontSize='lg'>{teamData.name}</Text>
-        <Text mx="20px" fontSize='sm' letterSpacing="10px">{teamData.score}</Text>
-        <Text as='b' fontSize='sm'>{teamData.awayTeamName}</Text>
+        <Text as='b' fontSize='lg'>{rate.teamName}</Text>
+        <Text mx="20px" fontSize='sm' letterSpacing="10px">{rate.matchScore}</Text>
+        <Text as='b' fontSize='sm'>{rate.reverseTeamName}</Text>
         <Box>
-          <Image src={teamData.awayTeamCrest} alt={teamData.awayTeamName} height="50px" width="50px" mx="auto" />
+          <Image src={rate.reverseTeamCrestUrl} alt={rate.reverseTeamName} height="50px" width="50px" mx="auto" />
         </Box>
       </Flex>
 
       <Box mb="20px" borderColor="#89DA59" borderBottomWidth="2px">
-        <Text fontSize="sm" as="b">{teamData.name} スターティングメンバー</Text>
+        <Text fontSize="sm" as="b">{rate.name} スターティングメンバー</Text>
       </Box>
 
       <Box boxShadow="0px 2px 8px rgba(0, 0, 0, 0.1)" textAlign="center">
         <Accordion allowMultiple>
-          {teamData.lineup.map((player, index) => (
+          {rate.scores.map((player, index) => (
             <PlayerRatingItem
-              key={player.id}
+              key={player.playerId}
               player={player}
               playerRate={playerRates[index]}
               index={index}
               onIncrement={incrementScore}
               onDecrement={decrementScore}
               onChangeAssessment={changeAssessment}
-              buttonWord={"追加"}
+              buttonWord={"編集"}
             />
           ))}
         </Accordion>
@@ -158,9 +154,9 @@ export const Rate = () => {
           borderRadius="50px"
           borderWidth="4px"
           _hover={{ bg: '#89DA59', color: "white" }}
-          onClick={isLoggedIn ? postRateData : onOpen}
+          onClick={isLoggedIn ? putRateData : onOpen}
         >
-          投稿する
+          更新する
         </Button>
         <LoginRequiredMessage isOpen={isOpen} onClose={onClose} cancelRef={cancelRef}></LoginRequiredMessage>
       </Box>

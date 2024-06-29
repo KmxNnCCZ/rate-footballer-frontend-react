@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { 
   Text,
@@ -12,15 +12,18 @@ import {
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
+import { useUser } from '../contexts/UserContext.js';
 import { signIn } from '../lib/api/auth.js'
 import Cookies from "js-cookie";
 
-export const Login = ({ isLoggedIn, setIsLoggedIn }) => {
+export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isRevealPassword, setIsRevealPassword] = useState(false);
+  const { isLoggedIn, setIsLoggedIn, setCurrentUser } = useUser();
   const navigate = useNavigate();
 
-  const [isRevealPassword, setIsRevealPassword] = useState(false);
+
   const togglePassword = () => {
     setIsRevealPassword((prevState) => !prevState);
   }
@@ -33,6 +36,7 @@ export const Login = ({ isLoggedIn, setIsLoggedIn }) => {
       Cookies.set("_client", res.headers["client"]);
       Cookies.set("_uid", res.headers["uid"]);
       setIsLoggedIn(true);
+      setCurrentUser(res.data.data);
       navigate("/")
     } catch (e) {
       console.log(e);
@@ -40,9 +44,9 @@ export const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   }
 
   // すでにログイン済みであればトップページに遷移
-  if(isLoggedIn) {
-    navigate("/");
-  }
+    if (isLoggedIn) {
+      navigate("/");
+    }
 
   return (
     <Box>

@@ -7,7 +7,7 @@ import {
   Flex,
   Heading,
   Grid,
-  GridItem
+  GridItem,
 } from "@chakra-ui/react";
 
 import formattedDate from "../lib/formattedDate";
