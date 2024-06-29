@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { 
   Text,
@@ -12,10 +12,10 @@ import {
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
-import { signIn, getUser } from '../lib/api/auth.js'
+import { signIn } from '../lib/api/auth.js'
 import Cookies from "js-cookie";
 
-export const Login = () => {
+export const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export const Login = () => {
       Cookies.set("_access_token", res.headers["accessToken"]);
       Cookies.set("_client", res.headers["client"]);
       Cookies.set("_uid", res.headers["uid"]);
-      window.location.reload();
+      setIsLoggedIn(true);
       navigate("/")
     } catch (e) {
       console.log(e);
@@ -40,20 +40,9 @@ export const Login = () => {
   }
 
   // すでにログイン済みであればトップページに遷移
-  // useEffect内でf関数を定義し実行しているのは、第1引数の関数の戻り値にはクリーンアップ関数を設定する必要がある非同期関数をそのまま書くとエラーが起きてしまうから
-  useEffect(() => {
-    const f = async () => {
-      try {
-        const res = await getUser();
-	      if (res && res.data.isLogin) {
-          navigate("/");
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    f();
-  }, [navigate]);
+  if(isLoggedIn) {
+    navigate("/");
+  }
 
   return (
     <Box>

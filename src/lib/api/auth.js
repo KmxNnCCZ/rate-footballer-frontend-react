@@ -14,7 +14,7 @@ export const signIn = (params) => {
 };
 
 // ログアウト
-export const signOut = async () => {
+export const signOut = async (setIsLoggedIn) => {
   const accessToken = Cookies.get("_access_token");
   const clientToken = Cookies.get("_client");
   const uid = Cookies.get("_uid");
@@ -35,7 +35,7 @@ export const signOut = async () => {
     document.cookie = '_access_token=; max-age=0;';
     document.cookie = '_client=; max-age=0;';
     document.cookie = '_uid=; max-age=0;';
-    window.location.reload();
+    setIsLoggedIn(false);
   } catch (e) {
     console.log(e);
   }
@@ -50,7 +50,7 @@ export const getUser = async() => {
   const uid = Cookies.get("_uid");
 
   if (!accessToken|| !clientToken || !uid) {
-    return; // 必要なクッキーが揃っていない場合、何もせずに終了
+    return {isLogin: false}; // 必要なクッキーが揃っていない場合、何もせずに終了
   }
 
   // ヘッダーを設定
@@ -61,5 +61,6 @@ export const getUser = async() => {
   };
 
   // ユーザー情報を取得
-  return client.get("/auth/sessions", { headers });
+  const res = await client.get("/auth/sessions", { headers });
+  return res.data;
 };
