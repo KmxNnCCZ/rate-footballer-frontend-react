@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 
 import positionShortName from "../lib/PositionShortNames";
+import { useState } from "react";
 
 export const PlayerRatingItem = ({ player, playerRate, index, onIncrement, onDecrement, onChangeAssessment, buttonWord }) => {
   return (
@@ -48,9 +49,15 @@ export const PlayerRatingItem = ({ player, playerRate, index, onIncrement, onDec
 };
 
 
-export const PlayerRatedItem = ({ playerPosition, playerShirtNumber, playerName, score, assessment, index }) => {
+export const PlayerRatedItem = ({ playerPosition, playerShirtNumber, playerName, score, assessment}) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleButton = () => {
+    setIsOpen(prevIsOpen => !prevIsOpen);
+  }
+
   return (
-    <AccordionItem>
+    <AccordionItem isOpen={isOpen}>
       <Grid templateColumns="1fr 1fr 5fr 3fr 3fr" alignItems="center" my="10px">
         <GridItem>{positionShortName[playerPosition]}</GridItem>
         <GridItem>{playerShirtNumber}</GridItem>
@@ -59,8 +66,12 @@ export const PlayerRatedItem = ({ playerPosition, playerShirtNumber, playerName,
           <Text as='b' mx="20px" textAlign="center">{score.toFixed(1)}</Text>
         </GridItem>
         <GridItem>
-          <AccordionButton>
-            <Box as='b'>評価を見る</Box>
+          <AccordionButton onClick={toggleButton}>
+            {isOpen ? 
+              <Box as='b'>閉じる</Box>
+            :
+              <Box as='b'>評価を見る</Box>
+            }
             <AccordionIcon />
           </AccordionButton>
         </GridItem>
