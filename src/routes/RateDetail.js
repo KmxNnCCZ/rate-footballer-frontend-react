@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { 
+  useParams,
+  Link as ReactRouterLink,
+  useNavigate } from 'react-router-dom';
 
 import { 
   Box,
   Flex,
   Text,
-  Button,
   Accordion,
-  Image
+  Image,
+  Tooltip,
+  Link as ChakraLink,
 } from '@chakra-ui/react';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+
 
 import { useUser } from '../contexts/UserContext';
-import { getRate } from '../lib/api/fetchRate';
+import { getRate, deleteRate } from '../lib/api/fetchRate';
 import { Loading } from '../components/Loading';
 import { PlayerRatedItem } from '../components/PlayerRatingItem';
 
@@ -33,11 +39,16 @@ export const RateDetail = () => {
     fetchRateData();
   }, [rateId]);
 
-
-
-  const navigateEditPage = (id) => {
+  const navigateEditPage = () => {
     if (currentUser && currentUser.id === res.userId) {
-      navigate(`/rates/${id}/edit`);
+      navigate(`/rates/${rateId}/edit`);
+    }
+  }
+
+  const fetchDeleteRate = async () => {
+    if (currentUser && currentUser.id === res.userId) {
+      await deleteRate(rateId);
+      navigate("/rates");
     }
   }
 
@@ -55,10 +66,14 @@ export const RateDetail = () => {
       <Flex justifyContent="space-between">
         <Text>{res.userName}</Text>
         {currentUser && currentUser.id === res.userId &&
-        <Box>
-        <Button onClick={() => navigateEditPage(res.id)}>編集</Button>
-        <Button>削除</Button>
-        </Box>
+          <Box>
+            <Tooltip label="編集" bg='gray.100' color='black' opacity="0.5">
+              <EditIcon onClick={() => navigateEditPage(res.id)} cursor="pointer" mr="15px"/>
+            </Tooltip>
+            <Tooltip label="削除" bg='gray.100' color='black'>
+              <DeleteIcon onClick={fetchDeleteRate} cursor="pointer"/>
+            </Tooltip>
+          </Box>
         }
       </Flex>
 
@@ -71,10 +86,10 @@ export const RateDetail = () => {
           </Flex>
           <Text
             fontSize="xs"
-            as="ins"
-            _hover={{color: "#89DA59"}}
+            // as="ins"
+            // _hover={{color: "#89DA59"}}
           >
-            <Link to={`/matches/${res.matchApiId}`}>試合詳細ページへ</Link>
+            <ChakraLink as={ReactRouterLink} to={`/matches/${res.matchApiId}`}>試合詳細ページへ</ChakraLink>
           </Text>
         </Flex>
         <Box>

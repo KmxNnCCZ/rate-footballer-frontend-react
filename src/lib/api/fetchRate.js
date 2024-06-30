@@ -62,3 +62,23 @@ export const putRate = (matchApiId, teamId, playerRates, rateId) => {
   const params = { matchApiId, teamId, playerRates };
   return client.put(`rates/${rateId}`, params, {headers})
 }
+
+// rateの削除
+export const deleteRate = (rateId) => {
+  const accessToken = Cookies.get("_access_token");
+  const clientToken = Cookies.get("_client");
+  const uid = Cookies.get("_uid");
+   
+  if (!accessToken|| !clientToken || !uid) {
+    console.log("ログインしてください")
+    return; // 必要なクッキーが揃っていない場合、何もせずに終了
+  }
+
+  const headers = {
+    "access-token": accessToken,
+    "client": clientToken,
+    "uid": uid,
+  };
+
+  return client.delete(`rates/${rateId}`, { headers })
+}

@@ -32,6 +32,14 @@ export const RateDetailEdit = () => {
   const [playerRates, setPlayerRates] = useState([]);
 
   useEffect(() => {
+    if (!currentUser) {
+      navigate(`/rates/${rateId}`);
+    } else if (!loading && rate && currentUser.id !== rate.userId) {
+      navigate(`/rates/${rateId}`);
+    }
+  }, [loading, isLoggedIn, currentUser, rate, navigate, rateId]);
+
+  useEffect(() => {
     const fetchEditRateData = async () => {
       const res = await editRate(rateId);
       setRate(res.data);
@@ -45,13 +53,6 @@ export const RateDetailEdit = () => {
     };
     fetchEditRateData()
   }, [rateId]);
-
-  useEffect(() => {
-    if (!loading && currentUser && rate && currentUser.id !== rate.userId) {
-      navigate('/');
-    }
-  }, [loading, isLoggedIn, currentUser, rate, navigate]);
-
 
   const incrementScore = (i) => {
     setPlayerRates((prevPlayerRates) => {

@@ -8,8 +8,11 @@ import {
   AlertDialogBody,
   AlertDialogHeader,
   AlertDialogFooter,
-  Button
- } from "@chakra-ui/react"
+  Button,
+  Text,
+  Flex
+} from "@chakra-ui/react"
+import { WarningIcon } from "@chakra-ui/icons";
 
 
 export const LoginRequiredMessage = ({isOpen, onClose, cancelRef}) => {
@@ -28,7 +31,14 @@ export const LoginRequiredMessage = ({isOpen, onClose, cancelRef}) => {
       <AlertDialogOverlay>
         <AlertDialogContent>
           <AlertDialogCloseButton />
-          <AlertDialogHeader fontSize='lg' fontWeight='bold'>ログインされていません</AlertDialogHeader>
+          <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+            <Flex alignItems="center">
+            <WarningIcon mr="10px" boxSize={5} />
+            <Text>
+              ログインされていません
+            </Text>
+            </Flex>
+          </AlertDialogHeader>
           <AlertDialogBody>採点するにはログインが必要です。</AlertDialogBody>
           <AlertDialogFooter>
             <Button 
