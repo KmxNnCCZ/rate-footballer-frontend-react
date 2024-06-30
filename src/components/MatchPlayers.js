@@ -1,26 +1,33 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import { 
   Tr,
   Td,
   Box,
   Button,
   Table,
-  Tbody
+  Tbody,
+  useDisclosure
 } from "@chakra-ui/react";
 
-import { useNavigate } from "react-router-dom";
+import { useUser } from "../contexts/UserContext";
 import positionShortName from "../lib/PositionShortNames";
+import { LoginRequiredMessage } from "./LoginRequiredMessage";
 
 
-export const MatchPlayers = ({ lineup, team, matchApiId}) => {
-  const path = `rate?team=${team}`
+export const MatchPlayers = ({ lineup, team }) => {
+  const { isLoggedIn } = useUser();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
   const navigate = useNavigate();
 
   const navigateToRatePage = () => {
-    navigate(path)
+    navigate(`rate?team=${team}`)
   }
 
   return (
-    <Box width="45%" textAlign="center" boxShadow="0px 2px 8px rgba(0, 0, 0, 0.1)"> {/* ホームチーム */}
+    <Box width="45%" textAlign="center" > {/* ホームチーム */}
       <Button 
         as='button'
         my="20px"
@@ -32,10 +39,11 @@ export const MatchPlayers = ({ lineup, team, matchApiId}) => {
         borderRadius="50px"
         borderWidth="4px"
         _hover={{ bg: '#89DA59', color: "white" }}
-        onClick={navigateToRatePage}
+        onClick={isLoggedIn ? navigateToRatePage : onOpen}
       >
         採点する
       </Button>
+      <LoginRequiredMessage isOpen={isOpen} onClose={onClose} cancelRef={cancelRef}></LoginRequiredMessage>
       <Table>
         <Tbody>
           {lineup.map((player) => (

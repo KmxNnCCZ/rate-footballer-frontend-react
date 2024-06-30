@@ -9,12 +9,12 @@ export const signUp = (params) => {
 };
 
 // ログイン
-export const signIn = (params) => {
-  return client.post("auth/sign_in", params);
+export const signIn = ({ email, password }) => {
+  return client.post("auth/sign_in", { email, password });
 };
 
 // ログアウト
-export const signOut = async (setIsLoggedIn) => {
+export const signOut = async (setIsLoggedIn, setCurrentUser) => {
   const accessToken = Cookies.get("_access_token");
   const clientToken = Cookies.get("_client");
   const uid = Cookies.get("_uid");
@@ -36,6 +36,7 @@ export const signOut = async (setIsLoggedIn) => {
     document.cookie = '_client=; max-age=0;';
     document.cookie = '_uid=; max-age=0;';
     setIsLoggedIn(false);
+    setCurrentUser(null);
   } catch (e) {
     console.log(e);
   }

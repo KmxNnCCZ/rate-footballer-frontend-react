@@ -13,7 +13,6 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 import { signUp } from "../lib/api/auth.js";
-import Cookies from "js-cookie";
 
 export const SignUp = () => {
   const [name, setName] = useState("");
@@ -29,10 +28,7 @@ export const SignUp = () => {
 
   const register = async () => {
     try {
-      const res = await signUp({ name, email, password });
-      Cookies.set("_access_token", res.headers["access-token"]);
-      Cookies.set("_client", res.headers["client"]);
-      Cookies.set("_uid", res.headers["uid"]);
+      await signUp({ name, email, password });
       navigate("/login");
     } catch (e) {
       console.log(e);
@@ -46,7 +42,7 @@ export const SignUp = () => {
       </Text>
       <Center>
         <Input
-          placeholder="ユーザー名"
+          placeholder="ユーザーネーム"
           mb="16px"
           maxW="600px"
           w="100%"

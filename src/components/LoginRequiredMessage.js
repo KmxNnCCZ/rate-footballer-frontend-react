@@ -8,8 +8,11 @@ import {
   AlertDialogBody,
   AlertDialogHeader,
   AlertDialogFooter,
-  Button
- } from "@chakra-ui/react"
+  Button,
+  Text,
+  Flex
+} from "@chakra-ui/react"
+import { WarningIcon } from "@chakra-ui/icons";
 
 
 export const LoginRequiredMessage = ({isOpen, onClose, cancelRef}) => {
@@ -28,11 +31,46 @@ export const LoginRequiredMessage = ({isOpen, onClose, cancelRef}) => {
       <AlertDialogOverlay>
         <AlertDialogContent>
           <AlertDialogCloseButton />
-          <AlertDialogHeader fontSize='lg' fontWeight='bold'>ログインされていません</AlertDialogHeader>
-          <AlertDialogBody>採点を投稿するにはログインが必要です。</AlertDialogBody>
+          <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+            <Flex alignItems="center">
+            <WarningIcon mr="10px" boxSize={5} />
+            <Text>
+              ログインされていません
+            </Text>
+            </Flex>
+          </AlertDialogHeader>
+          <AlertDialogBody>採点するにはログインが必要です。</AlertDialogBody>
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={navigateLoginPage}>ログインページへ</Button>
-            <Button colorScheme='red' onClick={navigateSignUpPage} ml={3}>未登録の方はこちら</Button>
+            <Button 
+              as='button'
+              my="20px"
+              h="60px"
+              color="#89DA59"
+              bg="white"
+              borderColor='#89DA59'
+              borderRadius="10px"
+              borderWidth="4px"
+              _hover={{ bg: '#89DA59', color: "white" }}
+              ref={cancelRef}
+              onClick={navigateLoginPage}
+            >
+              ログイン
+            </Button>
+            <Button 
+              as='button'
+              my="20px"
+              h="60px"
+              color="#89DA59"
+              bg="white"
+              borderColor='#89DA59'
+              borderRadius="10px"
+              borderWidth="4px"
+              _hover={{ bg: '#89DA59', color: "white" }}
+              onClick={navigateSignUpPage}
+              ml={3}
+            >
+              未登録の方はこちら
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialogOverlay>

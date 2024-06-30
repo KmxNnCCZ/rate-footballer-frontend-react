@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
+import { Link } from "react-router-dom";
 
-import { getRateList } from "../lib/api/rate";
+import { getRateList } from "../lib/api/fetchRate";
 import { Loading } from "../components/Loading";
 import { RateCard } from "../components/RateCard";
 import { getUser } from "../lib/api/auth";
@@ -56,14 +57,16 @@ export const Rates = () => {
         >
           {res.map((rate) => (
             <GridItem key={rate.id}>
-              <RateCard 
-                scores={rate.scores}
-                matchday={rate.matchday}
-                teamShortName={rate.teamShortName}
-                teamCrestUrl={rate.teamCrestUrl}
-                season={rate.season}
-                isOwner={currentUserId === rate.userId}
-              />
+              <Link to={`${rate.id}`}>
+                <RateCard 
+                  scores={rate.scores}
+                  matchday={rate.matchday}
+                  teamShortName={rate.teamShortName}
+                  teamCrestUrl={rate.teamCrestUrl}
+                  season={rate.season}
+                  isOwner={currentUserId === rate.userId}
+                />
+              </Link>
             </GridItem>
           ))}
         </Grid>
