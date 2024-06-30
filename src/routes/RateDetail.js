@@ -15,16 +15,17 @@ import {
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
-
 import { useUser } from '../contexts/UserContext';
 import { getRate, deleteRate } from '../lib/api/fetchRate';
 import { Loading } from '../components/Loading';
 import { PlayerRatedItem } from '../components/PlayerRatingItem';
+import { Comment } from '../components/Comment';
 
 
 export const RateDetail = () => {
   const [res, setRes] = useState();
   const [loading, setLoading] = useState(true);
+  const [comments, setComments] = useState([]);
   const {currentUser} = useUser();
   const { rateId } = useParams();
 
@@ -33,6 +34,9 @@ export const RateDetail = () => {
   useEffect(() => {
     const fetchRateData = async () => {
       const res = await getRate(rateId);
+      // console.log(JSON.stringify(res.data, null, 2));
+      setComments(res.data.comments.reverse());
+      delete res.data.comments
       setRes(res.data);
       setLoading(false);
     }
@@ -62,7 +66,7 @@ export const RateDetail = () => {
   const matchDate = `PL ${res.season} 第${res.matchday}節`;
 
   return (
-    <Box>
+    <Box width="80%" mx="auto">
       <Flex justifyContent="space-between">
         <Text>{res.userName}</Text>
         {currentUser && currentUser.id === res.userId &&
@@ -96,18 +100,19 @@ export const RateDetail = () => {
           <Accordion allowMultiple>
             {res.scores.map((score, index) => (
               <PlayerRatedItem
-              key={score.playerId}
-              playerPosition={score.position}
-              playerShirtNumber={score.shirtNumber}
-              playerName={score.name}
-              score={score.score}
-              assessment={score.assessment}
-              index={index}
-            />
+                key={score.playerId}
+                playerPosition={score.position}
+                playerShirtNumber={score.shirtNumber}
+                playerName={score.name}
+                score={score.score}
+                assessment={score.assessment}
+              />
             ))}
           </Accordion>
         </Box>
       </Box>
+
+      <Comment rateId={rateId} comments={comments}/>
     </Box>
   )
 }
