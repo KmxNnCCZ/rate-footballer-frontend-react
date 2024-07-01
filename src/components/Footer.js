@@ -2,7 +2,8 @@ import {
   Box,
   Flex,
   Heading,
-  Hide
+  Hide,
+  Text
 } from '@chakra-ui/react';
 import { CustomChevronRightIcon } from './CustomChevronRightIcon';
 import { Link } from "react-router-dom";
@@ -39,7 +40,7 @@ export const Footer = () => {
               <Link to="#"><CustomChevronRightIcon/>お問い合わせ</Link>
             </Box>
             <Box _hover={{color: "#83BD41"}}>
-              <Link to="#"><CustomChevronRightIcon />利用規約</Link>
+              <Link to="/terms_of_use"><CustomChevronRightIcon />利用規約</Link>
             </Box>
             <Box _hover={{color: "#83BD41"}}>
               <Link to="#"><CustomChevronRightIcon />プライバシーポリシー</Link>
@@ -47,41 +48,43 @@ export const Footer = () => {
           </Flex>
         </Flex>
       </Hide>
-        <Hide below="md">
-          <Flex
-            justifyContent="space-between"
-            minH="100px"
-            alignItems="center"
+      
+      <Hide below="md">
+        <Flex
+          justifyContent="space-between"
+          minH="100px"
+          alignItems="center"
+        >
+          <Heading 
+            as='h1' 
+            fontSize="xl" 
+            position="relative"
+            top="-15px"
+            left="15px"
+            cursor="pointer" 
+            fontFamily="Arial"
           >
-            <Heading 
-              as='h1' 
-              fontSize="xl" 
-              position="relative"
-              top="-15px"
-              left="15px"
-              cursor="pointer" 
-              fontFamily="Arial"
-            >
-              <Link to="/">Rate Footballer</Link>
-            </Heading>
-            <Flex 
-              // justifyContent="flex-end" 
-              gap="30px"
-              mr="30px"
-              fontSize="sm" 
-            >
-              <Box _hover={{color: "#83BD41"}}>
-                <Link to="#"><CustomChevronRightIcon/>お問い合わせ</Link>
-              </Box>
-              <Box _hover={{color: "#83BD41"}}>
-                <Link to="#"><CustomChevronRightIcon />利用規約</Link>
-              </Box>
-              <Box _hover={{color: "#83BD41"}}>
-                <Link to="#"><CustomChevronRightIcon />プライバシーポリシー</Link>
-              </Box>
-            </Flex>
+            <Link to="/">Rate Footballer</Link>
+          </Heading>
+          <Flex 
+            // justifyContent="flex-end" 
+            gap="30px"
+            mr="30px"
+            fontSize="sm" 
+          >
+            <Box _hover={{color: "#83BD41"}}>
+              <Link to="#"><CustomChevronRightIcon/>お問い合わせ</Link>
+            </Box>
+            <Box _hover={{color: "#83BD41"}}>
+              <Link to="/terms_of_use"><CustomChevronRightIcon />利用規約</Link>
+            </Box>
+            <Box _hover={{color: "#83BD41"}}>
+              <Link to="#"><CustomChevronRightIcon />プライバシーポリシー</Link>
+            </Box>
           </Flex>
-        </Hide>
+        </Flex>
+      </Hide>
+      <Text fontSize="xs" color="#A0AEC0" textAlign="center" mb="5px">Copyright © 2024 - Rate-Footballer</Text>
     </Box>
   )
 }
