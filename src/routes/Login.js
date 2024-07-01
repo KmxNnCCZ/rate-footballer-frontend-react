@@ -13,6 +13,7 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 import { useUser } from '../contexts/UserContext.js';
+import { useFlash } from '../contexts/FlashMessage.js';
 import { signIn } from '../lib/api/auth.js'
 import Cookies from "js-cookie";
 
@@ -21,6 +22,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [isRevealPassword, setIsRevealPassword] = useState(false);
   const { isLoggedIn, setIsLoggedIn, setCurrentUser } = useUser();
+  const { setIsExistFlash, setFlashMessage } = useFlash();
   const navigate = useNavigate();
 
 
@@ -37,9 +39,13 @@ export const Login = () => {
       Cookies.set("_uid", res.headers["uid"]);
       setIsLoggedIn(true);
       setCurrentUser(res.data.data);
+      setIsExistFlash(true);
+      setFlashMessage({type: "success", message: "ログインしました"});
       navigate("/")
     } catch (e) {
       console.log(e);
+      setIsExistFlash(true);
+      setFlashMessage({type: "error", message: "ログインに失敗しました"});
     }
   }
 
