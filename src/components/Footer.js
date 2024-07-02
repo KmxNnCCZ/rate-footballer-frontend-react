@@ -43,7 +43,7 @@ export const Footer = () => {
               <Link to="/terms_of_use"><CustomChevronRightIcon />利用規約</Link>
             </Box>
             <Box _hover={{color: "#83BD41"}}>
-              <Link to="#"><CustomChevronRightIcon />プライバシーポリシー</Link>
+              <Link to="/privacy_policy"><CustomChevronRightIcon />プライバシーポリシー</Link>
             </Box>
           </Flex>
         </Flex>
@@ -79,7 +79,7 @@ export const Footer = () => {
               <Link to="/terms_of_use"><CustomChevronRightIcon />利用規約</Link>
             </Box>
             <Box _hover={{color: "#83BD41"}}>
-              <Link to="#"><CustomChevronRightIcon />プライバシーポリシー</Link>
+              <Link to="/privacy_policy"><CustomChevronRightIcon />プライバシーポリシー</Link>
             </Box>
           </Flex>
         </Flex>

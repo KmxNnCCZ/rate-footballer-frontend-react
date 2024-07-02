@@ -20,6 +20,7 @@ import { Rates } from './routes/Rates.js';
 import { RateDetail } from './routes/RateDetail.js';
 import { RateDetailEdit } from './routes/RateDetailEdit.js';
 import { TermOfUse } from './routes/TermsOfUse.js';
+import { PrivacyPolicy } from './routes/PrivacyPolicy.js';
 
 import { UserProvider } from './contexts/UserContext.js';
 import { FlashProvider } from './contexts/FlashMessage.js';
@@ -48,6 +49,7 @@ function App() {
             <Route path="rates/:rateId" element={ <RateDetail/> }></Route>
             <Route path="rates/:rateId/edit" element={ <RateDetailEdit /> }></Route>
             <Route path="/terms_of_use" element={ <TermOfUse /> }></Route>
+            <Route path="/privacy_policy" element={ <PrivacyPolicy /> }></Route>
             <Route path="test" element={ <Test /> }></Route>
             <Route path="*" element={ <Notfound /> } />
           </Routes>
