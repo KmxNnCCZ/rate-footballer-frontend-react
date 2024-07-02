@@ -1,5 +1,5 @@
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 import {
   Box,
@@ -9,29 +9,62 @@ import {
   InputGroup,
   Button,
   InputRightElement,
+  FormControl,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
+import { useFlash } from "../contexts/FlashMessage.js";
 import { signUp } from "../lib/api/auth.js";
+import { userErrorMessages, emailErrorMessages, passwordErrorMessages } from "../lib/errorMessages.js";
 
 export const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emaiError, setEmaiError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const { setIsExistFlash, setFlashMessage } = useFlash();
 
   const [isRevealPassword, setIsRevealPassword] = useState(false);
   const togglePassword = () => {
     setIsRevealPassword((prevState) => !prevState);
   }
 
+    // ページが読み込まれたときスクロール位置をトップにする
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+  
+
   const navigate = useNavigate();
 
   const register = async () => {
     try {
+      // もう一度登録ボタンを押した場合、エラーメッセージを初期化
+      setNameError("");
+      setEmaiError("");
+      setPasswordError("");
       await signUp({ name, email, password });
+      setIsExistFlash(true);
+      setFlashMessage({type: "success", message: "登録が完了しました！"})
       navigate("/login");
     } catch (e) {
-      console.log(e);
+      if(e.response.data.errors) {
+        console.log(e.response.data.errors);
+        if (e.response.data.errors.name) {
+          setNameError(userErrorMessages[e.response.data.errors.name.join(" ")]);
+          console.log(e.response.data.errors.name)
+        }
+        if (e.response.data.errors.email) {
+          setEmaiError(emailErrorMessages[e.response.data.errors.email.join(" ")])
+        }
+        if (e.response.data.errors.password) {
+          setPasswordError(passwordErrorMessages[e.response.data.errors.password.join(" ")])
+        }
+
+      }
     }
   };
 
@@ -40,40 +73,46 @@ export const SignUp = () => {
       <Text textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="50px">
         ユーザー新規登録
       </Text>
+
       <Center>
-        <Input
-          placeholder="ユーザーネーム"
-          mb="16px"
-          maxW="600px"
-          w="100%"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        />
-      </Center>
-      <Center>
-      <Input
-        placeholder="メールアドレス"
-        mb="16px"
-        maxW="600px"
-        w="100%"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-      />
-      </Center>
-      <Center>
-        <InputGroup maxW="600px" w="100%" mb="50px">
+        <FormControl isInvalid={nameError} maxW="600px" w="100%" mb="16px">
           <Input
-            placeholder="パスワード"
-            value={password}
-            type={isRevealPassword ? 'text' : 'password'}
-            onChange={(event) => setPassword(event.target.value)}
+            placeholder="ユーザーネーム"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
           />
-          <InputRightElement>
-            <Button onClick={togglePassword}>
-              {isRevealPassword  ? <ViewOffIcon /> : <ViewIcon />}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
+          <FormErrorMessage ml="15px" mt="5px">※ {nameError}</FormErrorMessage>
+        </FormControl>
+      </Center>
+
+      <Center>
+        <FormControl isInvalid={emaiError}  maxW="600px" w="100%" mb="16px">
+          <Input
+            placeholder="メールアドレス"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <FormErrorMessage ml="15px" mt="5px">※ {emaiError}</FormErrorMessage>
+        </FormControl>
+      </Center>
+
+      <Center>
+        <FormControl isInvalid={passwordError} maxW="600px" w="100%" mb="50px">
+          <InputGroup>
+            <Input
+              placeholder="パスワード"
+              value={password}
+              type={isRevealPassword ? 'text' : 'password'}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <InputRightElement>
+              <Button onClick={togglePassword}>
+                {isRevealPassword  ? <ViewOffIcon /> : <ViewIcon />}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+          <FormErrorMessage ml="15px" mt="5px">※ {passwordError}</FormErrorMessage>
+        </FormControl>
       </Center>
       <Center>
         <Button alignContent="center" w="400px" bgColor="#89DA59"  mb="8px" onClick={register}>

@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header.js'
 import { Body } from './components/Body.js'
 import { Footer } from './components/Footer.js'
+import { FlashMessage } from './components/FlashMessage.js';
 
 import { Top } from './routes/Top';
 import { Login } from './routes/Login';
@@ -21,35 +22,39 @@ import { RateDetailEdit } from './routes/RateDetailEdit.js';
 import { TermOfUse } from './routes/TermsOfUse.js';
 
 import { UserProvider } from './contexts/UserContext.js';
+import { FlashProvider } from './contexts/FlashMessage.js';
 
 function App() {
   return (
    <ChakraProvider>
     <UserProvider>
-    <Flex
-      direction="column"
-      minHeight="100vh"
-    >
-      <Header />
-      <Body
+    <FlashProvider>
+      <Flex
+        direction="column"
+        minHeight="100vh"
       >
-        <Routes>
-          <Route path="/" element={ <Top /> }></Route>
-          <Route path="login" element={ <Login /> }></Route>
-          <Route path="signUp" element={ <SignUp /> }></Route>
-          <Route path="matches" element={ <Matches /> }></Route>
-          <Route path="/matches/:matchApiId" element={ <Match /> }></Route>
-          <Route path="/matches/:matchApiId/rate" element={ <Rate /> }></Route>
-          <Route path="rates" element={ <Rates /> }></Route>
-          <Route path="rates/:rateId" element={ <RateDetail/> }></Route>
-          <Route path="rates/:rateId/edit" element={ <RateDetailEdit /> }></Route>
-          <Route path="/terms_of_use" element={ <TermOfUse /> }></Route>
-          <Route path="test" element={ <Test /> }></Route>
-          <Route path="*" element={ <Notfound /> } />
-        </Routes>
-      </Body>
-      <Footer />
-    </Flex>
+        <Header />
+        <FlashMessage />
+        <Body
+        >
+          <Routes>
+            <Route path="/" element={ <Top /> }></Route>
+            <Route path="login" element={ <Login /> }></Route>
+            <Route path="signUp" element={ <SignUp /> }></Route>
+            <Route path="matches" element={ <Matches /> }></Route>
+            <Route path="/matches/:matchApiId" element={ <Match /> }></Route>
+            <Route path="/matches/:matchApiId/rate" element={ <Rate /> }></Route>
+            <Route path="rates" element={ <Rates /> }></Route>
+            <Route path="rates/:rateId" element={ <RateDetail/> }></Route>
+            <Route path="rates/:rateId/edit" element={ <RateDetailEdit /> }></Route>
+            <Route path="/terms_of_use" element={ <TermOfUse /> }></Route>
+            <Route path="test" element={ <Test /> }></Route>
+            <Route path="*" element={ <Notfound /> } />
+          </Routes>
+        </Body>
+        <Footer />
+      </Flex>
+    </FlashProvider>
     </UserProvider>
    </ChakraProvider>
   );

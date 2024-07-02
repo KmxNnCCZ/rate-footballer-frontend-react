@@ -15,6 +15,7 @@ import {
 import { HamburgerIcon, SmallCloseIcon } from '@chakra-ui/icons';
 
 import { useUser } from "../contexts/UserContext.js";
+import { useFlash } from "../contexts/FlashMessage.js";
 import { signOut } from '../lib/api/auth.js'
 
 const HeaderItem = ({children, itemPath, }) => {
@@ -107,9 +108,16 @@ const CustomButton = ({children, itemPath}) => {
 
 export const Header = () => {
   const { isLoggedIn, setIsLoggedIn, setCurrentUser } = useUser();
+  const { setIsExistFlash, setFlashMessage} = useFlash();
 
-  const logout = async () => {
-    await signOut(setIsLoggedIn, setCurrentUser);
+  const fetchSignOut = async () => {
+    const res = await signOut(setIsLoggedIn, setCurrentUser);
+    console.log(res.status);
+    if(res.status === 200) {
+      setIsExistFlash(true);
+      setFlashMessage({type: "success", message: "ログアウトしました"});
+    }
+
   };
 
   return (
@@ -155,7 +163,7 @@ export const Header = () => {
                       <>
                         <Link to="#"><MenuItem>ランキング</MenuItem></Link>
                         <Link to="#"><MenuItem>マイページ</MenuItem></Link>
-                        <Link onClick={logout}><MenuItem>ログアウト</MenuItem></Link>
+                        <Link onClick={fetchSignOut}><MenuItem>ログアウト</MenuItem></Link>
                       </>
                     ) : (
                       <>
@@ -188,7 +196,7 @@ export const Header = () => {
                 <>
                   <HeaderItem itemPath="#">ランキング</HeaderItem>
                   <HeaderItem itemPath="#">マイページ</HeaderItem>
-                  <Box onClick={logout}>
+                  <Box onClick={fetchSignOut}>
                     <CustomButton itemPath="">ログアウト</CustomButton>
                   </Box>
                 </>

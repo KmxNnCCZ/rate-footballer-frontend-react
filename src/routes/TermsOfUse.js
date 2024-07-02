@@ -7,8 +7,6 @@ import {
   VStack,
   UnorderedList,
   ListItem,
-  Divider,
-  AbsoluteCenter
 } from "@chakra-ui/react"
 
 const Article = ({ children }) => {
