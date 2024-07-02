@@ -30,13 +30,14 @@ export const signOut = async (setIsLoggedIn, setCurrentUser) => {
   };
 
   try {
-    await client.delete("auth/sign_out", { headers });
+    const res = await client.delete("auth/sign_out", { headers });
     // クッキー削除
     document.cookie = '_access_token=; max-age=0;';
     document.cookie = '_client=; max-age=0;';
     document.cookie = '_uid=; max-age=0;';
     setIsLoggedIn(false);
     setCurrentUser(null);
+    return res;
   } catch (e) {
     console.log(e);
   }

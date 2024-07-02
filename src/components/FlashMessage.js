@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { CheckCircleIcon, InfoIcon, WarningTwoIcon, CloseIcon } from "@chakra-ui/icons";
+import { motion, AnimatePresence } from "framer-motion";
 import { useFlash } from "../contexts/FlashMessage";
 
 const typeIcons = {
@@ -54,47 +55,62 @@ export const FlashMessage = () => {
 
   const IconComponent = typeIcons[flashMessage.type];
 
-  return isExistFlash ? (
-    <Box
-      mt="110px"
-      height="100px"
-      w="80%"
-      bgColor={typeStyles[flashMessage.type].bgColor}
-      borderRadius="10px"
-      borderColor={typeStyles[flashMessage.type].borderColor}
-      borderWidth="2px"
-      position="fixed"
-      zIndex="1000"
-      display="flex"
-      alignItems="center"
-      left="50%"
-      transform="translateX(-50%)"
-    >
-      <Flex justifyContent="space-between" alignItems="center" width="full" mx="20px">
-        <Box
-          bgColor={typeStyles[flashMessage.type].iconbgColor}
-          w="60px"
-          h="60px"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          borderRadius="50px"
+  return (
+    <AnimatePresence>
+      {isExistFlash && (
+        <motion.div
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -100, opacity: 0 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          style={{
+            zIndex: "1000",
+            width: "100%",
+            position: "fixed",
+            top: "50px",
+            left: "50%",
+            maxWidth: "1000px"
+          }}
         >
-          <IconComponent color="white" boxSize={5} />
-        </Box>
-        <Text fontSize="sm">{flashMessage.message}</Text>
-        <Box
-          bgColor="white"
-          w="50px"
-          h="50px"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          borderRadius="10px"
-        >
-          <CloseIcon onClick={closeFlash} />
-        </Box>
-      </Flex>
-    </Box>
-  ) : null;
+          <Box
+            transform="translateX(-50%)"
+            height="100px"
+            w="80%"
+            bgColor={typeStyles[flashMessage.type].bgColor}
+            borderRadius="10px"
+            borderColor={typeStyles[flashMessage.type].borderColor}
+            borderWidth="2px"
+            display="flex"
+            alignItems="center"
+          >
+            <Flex justifyContent="space-between" alignItems="center" width="full" mx="20px">
+              <Box
+                bgColor={typeStyles[flashMessage.type].iconbgColor}
+                w="60px"
+                h="60px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                borderRadius="50px"
+              >
+                <IconComponent color="white" boxSize={5} />
+              </Box>
+              <Text fontSize="sm" maxWidth="70%">{flashMessage.message}</Text>
+              <Box
+                bgColor="white"
+                w="50px"
+                h="50px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                borderRadius="10px"
+              >
+                <CloseIcon onClick={closeFlash} />
+              </Box>
+            </Flex>
+          </Box>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 };

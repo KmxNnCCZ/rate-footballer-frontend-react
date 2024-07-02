@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { 
@@ -24,6 +24,11 @@ export const Login = () => {
   const { isLoggedIn, setIsLoggedIn, setCurrentUser } = useUser();
   const { setIsExistFlash, setFlashMessage } = useFlash();
   const navigate = useNavigate();
+
+  // ページが読み込まれたときスクロール位置をトップにする
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
 
   const togglePassword = () => {
