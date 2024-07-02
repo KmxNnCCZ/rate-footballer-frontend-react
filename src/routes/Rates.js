@@ -21,7 +21,7 @@ export const Rates = () => {
 
   const fetchRatesData = async () => {
     const rateList = await getRateList()
-    setRes(rateList.data);
+    setRes(rateList.data.reverse());
     setLoading(false); // データの読み込みが完了
     // console.log(JSON.stringify(res.data, null,2))
   }

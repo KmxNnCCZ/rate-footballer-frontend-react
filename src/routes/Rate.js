@@ -17,6 +17,7 @@ import { postRate } from "../lib/api/fetchRate";
 import { Loading } from "../components/Loading";
 import { PlayerRatingItem } from "../components/PlayerRatingItem";
 import { LoginRequiredMessage } from "../components/LoginRequiredMessage";
+import sortPlayer from "../lib/sortPlayer";
 
 
 export const Rate = () => {
@@ -133,7 +134,7 @@ export const Rate = () => {
 
       <Box boxShadow="0px 2px 8px rgba(0, 0, 0, 0.1)" textAlign="center">
         <Accordion allowMultiple>
-          {teamData.lineup.map((player, index) => (
+          {sortPlayer(teamData.lineup).map((player, index) => (
             <PlayerRatingItem
               key={player.id}
               player={player}
