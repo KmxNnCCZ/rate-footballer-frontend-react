@@ -20,6 +20,7 @@ import { getRate, deleteRate } from '../lib/api/fetchRate';
 import { Loading } from '../components/Loading';
 import { PlayerRatedItem } from '../components/PlayerRatingItem';
 import { Comment } from '../components/Comment';
+import sortPlayer from '../lib/sortPlayer';
 
 
 export const RateDetail = () => {
@@ -38,6 +39,7 @@ export const RateDetail = () => {
       setComments(res.data.comments.reverse());
       delete res.data.comments
       setRes(res.data);
+      console.log(res.data.scores);
       setLoading(false);
     }
     fetchRateData();
@@ -90,15 +92,13 @@ export const RateDetail = () => {
           </Flex>
           <Text
             fontSize="xs"
-            // as="ins"
-            // _hover={{color: "#89DA59"}}
           >
             <ChakraLink as={ReactRouterLink} to={`/matches/${res.matchApiId}`}>試合詳細ページへ</ChakraLink>
           </Text>
         </Flex>
         <Box>
           <Accordion allowMultiple>
-            {res.scores.map((score, index) => (
+            {sortPlayer(res.scores).map((score) => (
               <PlayerRatedItem
                 key={score.playerId}
                 playerPosition={score.position}

@@ -12,11 +12,11 @@ import {
 } from "@chakra-ui/react";
 
 import positionShortName from "../lib/PositionShortNames";
+import sortPlayer from '../lib/sortPlayer';
 
 
 export const RateCard = ({ scores, matchday, teamShortName, teamCrestUrl, season, isOwner }) => {
   const matchDate = `PL ${season} 第${matchday}節`;
-
   return(
     <Card w="500px">
       <CardHeader>
@@ -38,7 +38,7 @@ export const RateCard = ({ scores, matchday, teamShortName, teamCrestUrl, season
             <GridItem w="90%" mx="auto" bgColor="#EDF2F7">選手名</GridItem>
             <GridItem w="90%" mx="auto" bgColor="#EDF2F7">スコア</GridItem>
           </Grid>
-          {scores.map((score) => (
+          {sortPlayer(scores).map((score) => (
             <Grid key={score.playerId} templateColumns="1fr 1fr 5fr 1.5fr" alignItems="center" mb="3px" textAlign="center">
               <GridItem>{positionShortName[score.position]}</GridItem>
               <GridItem>{score.shirtNumber}</GridItem>

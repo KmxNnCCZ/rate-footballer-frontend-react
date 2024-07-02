@@ -57,7 +57,7 @@ export const PlayerRatedItem = ({ playerPosition, playerShirtNumber, playerName,
   }
 
   return (
-    <AccordionItem isOpen={isOpen}>
+    <AccordionItem isopen={isOpen.toString()}>
       <Grid templateColumns="1fr 1fr 5fr 3fr 3fr" alignItems="center" my="10px">
         <GridItem>{positionShortName[playerPosition]}</GridItem>
         <GridItem>{playerShirtNumber}</GridItem>
