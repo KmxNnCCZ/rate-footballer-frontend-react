@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Cookies from "js-cookie";
 
 import { 
   Text,
@@ -15,7 +16,6 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { useUser } from '../contexts/UserContext.js';
 import { useFlash } from '../contexts/FlashMessage.js';
 import { signIn } from '../lib/api/auth.js'
-import Cookies from "js-cookie";
 
 export const Login = () => {
   const [email, setEmail] = useState("");

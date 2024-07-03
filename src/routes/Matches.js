@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getMatchList } from "../lib/api/fetchMatch";
 
 import { 
   Text,
@@ -11,6 +10,7 @@ import {
   Flex
 } from "@chakra-ui/react";
 
+import { getMatchList } from "../lib/api/fetchMatch";
 import { MatchCard } from "../components/MatchCard";
 import { Loading } from "../components/Loading";
 

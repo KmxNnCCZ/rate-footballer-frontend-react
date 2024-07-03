@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 
 import {
   Box,
@@ -8,12 +8,12 @@ import {
   Button,
   useDisclosure,
   Stack
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
 
-import { useUser } from "../contexts/UserContext"
-import { LoginRequiredMessage } from "./LoginRequiredMessage"
-import { CommentItem } from "./CommentItem"
-import { postComment, deleteComment } from "../lib/api/fetchComment"
+import { LoginRequiredMessage } from "./LoginRequiredMessage";
+import { CommentItem } from "./CommentItem";
+import { useUser } from "../contexts/UserContext";
+import { postComment, deleteComment } from "../lib/api/fetchComment";
 
 export const Comment = ({rateId, comments: initialComments}) => {
   const { isLoggedIn, currentUser } = useUser();
@@ -77,7 +77,12 @@ export const Comment = ({rateId, comments: initialComments}) => {
           >
             投稿する
           </Button>
-          <LoginRequiredMessage isOpen={isOpen} onClose={onClose} cancelRef={cancelRef}></LoginRequiredMessage>
+          <LoginRequiredMessage
+            isOpen={isOpen}
+            onClose={onClose}
+            cancelRef={cancelRef}
+            message={"コメント"}
+          />
         </Flex>
 
         <Box mt="30px">

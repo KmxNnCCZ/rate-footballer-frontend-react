@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { 
   Box,
   Flex,
@@ -5,8 +7,9 @@ import {
   Hide,
   Text
 } from '@chakra-ui/react';
+
 import { CustomChevronRightIcon } from './CustomChevronRightIcon';
-import { Link } from "react-router-dom";
+
 
 export const Footer = () => {
   return (

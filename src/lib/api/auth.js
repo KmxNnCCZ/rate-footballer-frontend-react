@@ -1,5 +1,5 @@
-import Cookies from "js-cookie";
 import client from "./client";
+import { setHeader } from "./setHeader";
 
 // client.httpメソッド（path, params）
 
@@ -15,19 +15,8 @@ export const signIn = ({ email, password }) => {
 
 // ログアウト
 export const signOut = async (setIsLoggedIn, setCurrentUser) => {
-  const accessToken = Cookies.get("_access_token");
-  const clientToken = Cookies.get("_client");
-  const uid = Cookies.get("_uid");
-   
-  if (!accessToken|| !clientToken || !uid) {
-    return; // 必要なクッキーが揃っていない場合、何もせずに終了
-  }
-
-  const headers = {
-    "access-token": accessToken,
-    "client": clientToken,
-    "uid": uid,
-  };
+  const headers = setHeader();
+  if(!headers) return;
 
   try {
     const res = await client.delete("auth/sign_out", { headers });
@@ -47,20 +36,8 @@ export const signOut = async (setIsLoggedIn, setCurrentUser) => {
 
 // ユーザー情報を取得
 export const getUser = async() => {
-  const accessToken = Cookies.get("_access_token");
-  const clientToken = Cookies.get("_client");
-  const uid = Cookies.get("_uid");
-
-  if (!accessToken|| !clientToken || !uid) {
-    return {isLogin: false}; // 必要なクッキーが揃っていない場合、何もせずに終了
-  }
-
-  // ヘッダーを設定
-  const headers = {
-    "access-token": accessToken,
-    "client": clientToken,
-    "uid": uid,
-  };
+  const headers = setHeader();
+  if(!headers) return;
 
   // ユーザー情報を取得
   const res = await client.get("/auth/sessions", { headers });

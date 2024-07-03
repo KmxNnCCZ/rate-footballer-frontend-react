@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+
 import {
   Text,
   Box,
@@ -8,21 +9,17 @@ import {
   Heading,
   Button,
   Accordion,
-  useDisclosure,
 } from "@chakra-ui/react";
 
+import { Loading } from "../components/Loading";
+import { PlayerRatingItem } from "../components/PlayerRatingItem";
 import { useUser } from "../contexts/UserContext";
 import { getTeam } from "../lib/api/fetchMatch";
 import { postRate } from "../lib/api/fetchRate";
-import { Loading } from "../components/Loading";
-import { PlayerRatingItem } from "../components/PlayerRatingItem";
-import { LoginRequiredMessage } from "../components/LoginRequiredMessage";
 import sortPlayer from "../lib/sortPlayer";
 
 
 export const Rate = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = React.useRef();
 
   const { matchApiId } = useParams();
   const { isLoggedIn } = useUser();
@@ -39,6 +36,10 @@ export const Rate = () => {
 
   useEffect(() => {
     const fetchMatch = async () => {
+      if (!isLoggedIn) {
+        navigate(`/matches/${matchApiId}`);
+      }
+
       try {
         const res = await getTeam(matchApiId, team);
         setTeamData(res.data);
@@ -56,7 +57,7 @@ export const Rate = () => {
     };
 
     fetchMatch();
-  }, [matchApiId, team]);
+  }, [matchApiId, team, isLoggedIn, navigate]);
 
   const incrementScore = (i) => {
     setPlayerRates((prevPlayerRates) => {
@@ -159,11 +160,10 @@ export const Rate = () => {
           borderRadius="50px"
           borderWidth="4px"
           _hover={{ bg: '#89DA59', color: "white" }}
-          onClick={isLoggedIn ? postRateData : onOpen}
+          onClick={postRateData}
         >
           投稿する
         </Button>
-        <LoginRequiredMessage isOpen={isOpen} onClose={onClose} cancelRef={cancelRef}></LoginRequiredMessage>
       </Box>
     </Box>
   );
