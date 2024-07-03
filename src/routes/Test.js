@@ -1,7 +1,8 @@
-import { Heading, Input, Button } from "@chakra-ui/react"
+import { Heading, Input, Button, Box } from "@chakra-ui/react"
 import { useState } from 'react';
 
 import { getTestData } from "../lib/api/test.js";
+import { sendEmail } from "../lib/api/sendEmail.js";
 
 export const Test = () => {
   const [path, setPath] = useState('')
@@ -10,6 +11,15 @@ export const Test = () => {
     try {
       const res = await getTestData(path);
       console.log("RESPONSE_DATA", JSON.stringify(res.data, null, 2));
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const fetchSendEmail = async() => {
+    try {
+      const res = await sendEmail();
+      console.log(res)
     } catch (e) {
       console.log(e);
     }
@@ -27,6 +37,9 @@ export const Test = () => {
           onChange={(e) => setPath(e.target.value)}
         />
       <Button onClick={() => getData(path)}>データを取得</Button>
+      <Box mt="50px">
+        <Button onClick={fetchSendEmail}>メールを送信する</Button>
+      </Box>
     </>
   )
 }
