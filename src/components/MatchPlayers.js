@@ -11,10 +11,9 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 
+import { LoginRequiredMessage } from "./LoginRequiredMessage";
 import { useUser } from "../contexts/UserContext";
 import positionShortName from "../lib/PositionShortNames";
-import { LoginRequiredMessage } from "./LoginRequiredMessage";
-
 
 export const MatchPlayers = ({ lineup, team }) => {
   const { isLoggedIn } = useUser();
@@ -43,7 +42,12 @@ export const MatchPlayers = ({ lineup, team }) => {
       >
         採点する
       </Button>
-      <LoginRequiredMessage isOpen={isOpen} onClose={onClose} cancelRef={cancelRef}></LoginRequiredMessage>
+      <LoginRequiredMessage 
+        isOpen={isOpen}
+        onClose={onClose}
+        cancelRef={cancelRef}
+        message={"採点"}
+      />
       <Table>
         <Tbody>
           {lineup.map((player) => (

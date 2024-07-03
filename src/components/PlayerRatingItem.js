@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { 
   AccordionItem,
   AccordionButton,
@@ -13,7 +15,6 @@ import {
 } from "@chakra-ui/react";
 
 import positionShortName from "../lib/PositionShortNames";
-import { useState } from "react";
 
 export const PlayerRatingItem = ({ player, playerRate, index, onIncrement, onDecrement, onChangeAssessment, buttonWord }) => {
   return (

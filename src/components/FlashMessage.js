@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { CheckCircleIcon, InfoIcon, WarningTwoIcon, CloseIcon } from "@chakra-ui/icons";
 import { motion, AnimatePresence } from "framer-motion";
+
 import { useFlash } from "../contexts/FlashMessage";
 
 const typeIcons = {

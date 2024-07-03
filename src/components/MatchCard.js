@@ -14,7 +14,6 @@ import formattedDate from "../lib/formattedDate";
 
 export const MatchCard = ({ matchData, homeTeam, awayTeam }) => {
   const matchday = `第${matchData.matchday}節`;
-
   const result = `${matchData.homeTeamScore} - ${matchData.awayTeamScore}`
 
   return(

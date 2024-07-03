@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+
 import {
   Text,
   Box,
@@ -11,13 +12,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { useUser } from "../contexts/UserContext";
-import { editRate } from "../lib/api/fetchRate";
-import { putRate } from "../lib/api/fetchRate";
 import { Loading } from "../components/Loading";
 import { PlayerRatingItem } from "../components/PlayerRatingItem";
 import { LoginRequiredMessage } from "../components/LoginRequiredMessage";
-
+import { useUser } from "../contexts/UserContext";
+import { editRate } from "../lib/api/fetchRate";
+import { putRate } from "../lib/api/fetchRate";
 
 export const RateDetailEdit = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

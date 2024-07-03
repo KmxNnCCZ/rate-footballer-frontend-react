@@ -1,5 +1,4 @@
 // 利用規約ページ
-
 import {
   Text,
   Heading,

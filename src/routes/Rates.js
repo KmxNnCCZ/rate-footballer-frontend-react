@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
 
-import { getRateList } from "../lib/api/fetchRate";
-import { Loading } from "../components/Loading";
-import { RateCard } from "../components/RateCard";
-import { getUser } from "../lib/api/auth";
-
 import { 
   Box,
   Text,
@@ -13,34 +8,25 @@ import {
   GridItem,
  } from "@chakra-ui/react";
 
+import { Loading } from "../components/Loading";
+import { RateCard } from "../components/RateCard";
+import { useUser } from "../contexts/UserContext";
+import { getRateList } from "../lib/api/fetchRate";
 
 export const Rates = () => {
   const [res, setRes] = useState([]);
-  const [currentUserId, setCurrentUserId] = useState(undefined);
   const [loading, setLoading] = useState(true);
-
-  const fetchRatesData = async () => {
-    const rateList = await getRateList()
-    setRes(rateList.data.reverse());
-    setLoading(false); // データの読み込みが完了
-    // console.log(JSON.stringify(res.data, null,2))
-  }
-
-  const fetchCurrentUser = async () => {
-    const user = await getUser();
-    if (user.isLogin) {
-      setCurrentUserId(user.data.id)
-    }
-  };
+  const { isLoggedIn, currentUser } = useUser();
 
   useEffect(() => {
-    const fetchData = async () => {
-      await Promise.all([fetchRatesData(), fetchCurrentUser()]);
-      setLoading(false); // 両方のデータの読み込みが完了
-    };
-    fetchData();
-  }, [])
-
+    const fetchRatesData = async () => {
+      const rateList = await getRateList()
+      setRes(rateList.data.reverse());
+      setLoading(false); // データの読み込みが完了
+      // console.log(JSON.stringify(res.data, null,2))
+    }
+    fetchRatesData()
+  }, [isLoggedIn, currentUser])
 
   return (
     <Box>
@@ -64,7 +50,7 @@ export const Rates = () => {
                   teamShortName={rate.teamShortName}
                   teamCrestUrl={rate.teamCrestUrl}
                   season={rate.season}
-                  isOwner={currentUserId === rate.userId}
+                  isOwner={isLoggedIn && currentUser.id === rate.userId}
                 />
               </Link>
             </GridItem>

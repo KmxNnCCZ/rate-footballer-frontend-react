@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { 
+import {
   useParams,
   Link as ReactRouterLink,
-  useNavigate } from 'react-router-dom';
+  useNavigate
+} from 'react-router-dom';
 
-import { 
+import {
   Box,
   Flex,
   Text,
@@ -15,11 +16,11 @@ import {
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
-import { useUser } from '../contexts/UserContext';
-import { getRate, deleteRate } from '../lib/api/fetchRate';
 import { Loading } from '../components/Loading';
 import { PlayerRatedItem } from '../components/PlayerRatingItem';
 import { Comment } from '../components/Comment';
+import { useUser } from '../contexts/UserContext';
+import { getRate, deleteRate } from '../lib/api/fetchRate';
 import sortPlayer from '../lib/sortPlayer';
 
 
@@ -39,7 +40,6 @@ export const RateDetail = () => {
       setComments(res.data.comments.reverse());
       delete res.data.comments
       setRes(res.data);
-      console.log(res.data.scores);
       setLoading(false);
     }
     fetchRateData();
