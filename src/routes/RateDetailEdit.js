@@ -22,9 +22,9 @@ import { putRate } from "../lib/api/fetchRate";
 export const RateDetailEdit = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
-  const { currentUser, isLoggedIn } = useUser();
+  const { currentUser, isLoggedIn, userLoading } = useUser();
   const [rate, setRate] = useState();
-  const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
 
   const { rateId } = useParams();
   const navigate = useNavigate();
@@ -32,12 +32,14 @@ export const RateDetailEdit = () => {
   const [playerRates, setPlayerRates] = useState([]);
 
   useEffect(() => {
-    if (!currentUser) {
-      navigate(`/rates/${rateId}`);
-    } else if (!loading && rate && currentUser.id !== rate.userId) {
-      navigate(`/rates/${rateId}`);
+    if(!userLoading) {
+      if (!currentUser) {
+        navigate(`/rates/${rateId}`);
+      } else if (!pageLoading && rate && currentUser.id !== rate.userId) {
+        navigate(`/rates/${rateId}`);
+      }
     }
-  }, [loading, isLoggedIn, currentUser, rate, navigate, rateId]);
+  }, [userLoading, pageLoading, isLoggedIn, currentUser, rate, navigate, rateId]);
 
   useEffect(() => {
     const fetchEditRateData = async () => {
@@ -49,7 +51,7 @@ export const RateDetailEdit = () => {
         assessment: player.assessment
       }));
       setPlayerRates(initialPlayerRates);
-      setLoading(false);
+      setPageLoading(false);
     };
     fetchEditRateData()
   }, [rateId]);
@@ -95,7 +97,7 @@ export const RateDetailEdit = () => {
     navigate(`/rates/${rateId}`);
   };
 
-  if (loading) {
+  if (userLoading || pageLoading) {
     return <Loading />;
   }
 

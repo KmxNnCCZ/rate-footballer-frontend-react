@@ -35,7 +35,7 @@ export const Login = () => {
     setIsRevealPassword((prevState) => !prevState);
   }
 
-  const login = async () => {
+  const fetchLogin = async () => {
     try {
       const res = await signIn({ email, password });
       // レスポンスをもとにクッキーをセット
@@ -62,7 +62,7 @@ export const Login = () => {
   return (
     <Box>
       <Text textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="50px">
-        ログインページ
+        ログイン
       </Text>
       <Center>
         <Input
@@ -90,9 +90,21 @@ export const Login = () => {
         </InputGroup>
       </Center>
       <Center>
-        <Button alignContent="center" w="400px" bgColor="#89DA59" mb="8px" onClick={login}>
-          ログイン
-        </Button>
+      <Button
+        as='button'
+        my="20px"
+        w="250px"
+        h="70px"
+        color="#89DA59"
+        bg="white"
+        borderColor='#89DA59'
+        borderRadius="10px"
+        borderWidth="4px"
+        _hover={{ bg: '#89DA59', color: "white" }}
+        onClick={fetchLogin}
+      >
+        ログイン
+      </Button>
       </Center>
       <Box textAlign="right" color="blue.500">
         <Link to="/signUp">新規登録はこちら</Link>

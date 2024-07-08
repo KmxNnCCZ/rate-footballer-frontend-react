@@ -7,7 +7,6 @@ import client from "./client";
 
 // 試合を取得する
 export const getMatchList = (params) => {
-  // console.log(params);
   return  client.get("matches", { params });
 }
 

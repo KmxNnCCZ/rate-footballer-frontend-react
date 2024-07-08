@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { 
   Box,
@@ -17,16 +17,24 @@ export const Rates = () => {
   const [res, setRes] = useState([]);
   const [loading, setLoading] = useState(true);
   const { isLoggedIn, currentUser } = useUser();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchRatesData = async () => {
       const rateList = await getRateList()
-      setRes(rateList.data.reverse());
+      const queryParams = new URLSearchParams(location.search);
+      const myPosts = queryParams.get('myPosts');
+      let filteredRates = rateList.data;
+      if (myPosts === 'true' && isLoggedIn) {
+        filteredRates = filteredRates.filter(rate => rate.userId === currentUser.id);
+      }
+
+      setRes(filteredRates.reverse());
       setLoading(false); // データの読み込みが完了
       // console.log(JSON.stringify(res.data, null,2))
     }
     fetchRatesData()
-  }, [isLoggedIn, currentUser])
+  }, [isLoggedIn, currentUser, location.search])
 
   return (
     <Box>
