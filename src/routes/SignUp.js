@@ -115,9 +115,21 @@ export const SignUp = () => {
         </FormControl>
       </Center>
       <Center>
-        <Button alignContent="center" w="400px" bgColor="#89DA59"  mb="8px" onClick={register}>
-          登録する
-        </Button>
+      <Button
+        as='button'
+        my="20px"
+        w="250px"
+        h="70px"
+        color="#89DA59"
+        bg="white"
+        borderColor='#89DA59'
+        borderRadius="10px"
+        borderWidth="4px"
+        _hover={{ bg: '#89DA59', color: "white" }}
+        onClick={register}
+      >
+        登録する
+      </Button>
       </Center>
       <Box textAlign="right" color="blue.500">
         <Link to="/login">ログインはこちら</Link>

@@ -22,25 +22,28 @@ import sortPlayer from "../lib/sortPlayer";
 export const Rate = () => {
 
   const { matchApiId } = useParams();
-  const { isLoggedIn } = useUser();
+  const { isLoggedIn, userLoading } = useUser();
   const [teamData, setTeamData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [ team, setTeam ] = useState("");
   const navigate = useNavigate();
 
   const [playerRates, setPlayerRates] = useState([]);
-
-  const query = new URLSearchParams(useLocation().search);
-  const team = query.get('team');
+  const location = useLocation();
 
   const matchday = `第${teamData.matchday}節`;
 
   useEffect(() => {
     const fetchMatch = async () => {
-      if (!isLoggedIn) {
+      if (!userLoading && !isLoggedIn) {
         navigate(`/matches/${matchApiId}`);
       }
 
       try {
+        const query = new URLSearchParams(location.search);
+        const team = query.get('team');
+        setTeam(team);
+
         const res = await getTeam(matchApiId, team);
         setTeamData(res.data);
         const initialPlayerRates = res.data.lineup.map(player => ({
@@ -57,7 +60,7 @@ export const Rate = () => {
     };
 
     fetchMatch();
-  }, [matchApiId, team, isLoggedIn, navigate]);
+  }, [matchApiId, isLoggedIn, navigate, location.search, userLoading]);
 
   const incrementScore = (i) => {
     setPlayerRates((prevPlayerRates) => {
@@ -102,7 +105,7 @@ export const Rate = () => {
     }
   };
 
-  if (loading) {
+  if (userLoading || loading) {
     return <Loading />;
   }
 
