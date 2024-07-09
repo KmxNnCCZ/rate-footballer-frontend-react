@@ -5,32 +5,35 @@ import {
   Box,
   Button,
   Text,
-  Flex
+  Flex,
+  useDisclosure
 } from "@chakra-ui/react";
 
 import { Loading } from "../components/Loading";
+import { ConfirmationChangePassword } from "../components/ConfirmationChangePassword";
 import { useUser } from "../contexts/UserContext";
 
 export const MyPage = () => {
   const navigate = useNavigate()
   const {isLoggedIn, currentUser, userLoading } = useUser();
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   useEffect(() => {
-    if(!userLoading) {
-      if(!isLoggedIn) {
-        navigate("/")
+    const checkLoggedInStatus = () => {
+      if (!userLoading && !isLoggedIn) {
+        navigate("/");
       }
-    }
-  }, [userLoading, isLoggedIn, navigate])
+    };
+
+    checkLoggedInStatus();
+  }, [userLoading, isLoggedIn, navigate]);
 
   if (userLoading) {
-    return (
-      <Loading />
-    );
-  };
+    return <Loading />;
+  }
 
-  const changeUserInformation = () => {
-
+  if (!isLoggedIn) {
+    return null;
   }
 
   const myRates = () => {
@@ -60,10 +63,28 @@ export const MyPage = () => {
             borderRadius="10px"
             borderWidth="4px"
             _hover={{ bg: '#89DA59', color: "white" }}
-            onClick={changeUserInformation}
           >
-            ユーザー情報の変更
+            ユーザー名・メールアドレスの変更
           </Button>
+          <Button
+            as='button'
+            my="20px"
+            w="500px"
+            h="70px"
+            color="#89DA59"
+            bg="white"
+            borderColor='#89DA59'
+            borderRadius="10px"
+            borderWidth="4px"
+            _hover={{ bg: '#89DA59', color: "white" }}
+            onClick={onOpen}
+          >
+            パスワードの変更
+          </Button>
+          <ConfirmationChangePassword
+            isOpen={isOpen}
+            onClose={onClose}
+          />
           <Button
             as='button'
             my="20px"

@@ -38,7 +38,6 @@ export const signOut = async (setIsLoggedIn, setCurrentUser) => {
 export const getUser = async() => {
   const headers = setHeader();
   if(!headers) return;
-
   // ユーザー情報を取得
   const res = await client.get("/auth/sessions", { headers });
   return res.data;

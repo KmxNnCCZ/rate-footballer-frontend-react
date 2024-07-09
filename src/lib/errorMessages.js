@@ -1,4 +1,4 @@
-export const userErrorMessages = {
+export const userNameErrorMessages = {
   "can't be blank": "ユーザー名を入力してください。",
   "is too long (maximum is 50 characters)": "50文字以内で入力してください。",
 }
