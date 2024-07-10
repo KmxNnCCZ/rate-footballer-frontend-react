@@ -63,7 +63,6 @@ export const SignUp = () => {
         if (e.response.data.errors.password) {
           setPasswordError(passwordErrorMessages[e.response.data.errors.password.join(" ")])
         }
-
       }
     }
   };

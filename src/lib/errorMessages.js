@@ -15,3 +15,7 @@ export const passwordErrorMessages = {
   "is too long (maximum is 128 characters)": "128文字以内で入力してください。",
 }
 
+export const updateUserInformationMessage = {
+  "Please submit proper account update data in request body.": "リクエスト本文に適切なアカウント更新データを入力してください",
+}
+

@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
-import { updatePassword, hasPermission } from "../lib/api/user.js";
+import { updatePassword, hasPermission } from "../lib/api/changeUserInformation.js";
 import { passwordErrorMessages } from "../lib/errorMessages.js";
 import { useFlash } from "../contexts/FlashMessage.js";
 
@@ -33,7 +33,6 @@ export const UpdatePassword = () => {
   useEffect(() => {
     const checkPermissions = async () => {
       const status = await hasPermission(token);
-      console.log(status);
       if(status === 200) {
 
       } else {
@@ -50,6 +49,7 @@ export const UpdatePassword = () => {
       await updatePassword(token, password);
       setIsExistFlash(true);
       setFlashMessage({type: "success", message: "パスワードを変更しました。"})
+      navigate("/mypage")
     } catch (e) {
       // これが機能していない
       if(e.response.data.errors) {

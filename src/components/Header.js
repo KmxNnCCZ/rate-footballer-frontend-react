@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import {
   Box,
@@ -109,6 +109,7 @@ const CustomButton = ({children, itemPath}) => {
 export const Header = () => {
   const { isLoggedIn, setIsLoggedIn, setCurrentUser } = useUser();
   const { setIsExistFlash, setFlashMessage} = useFlash();
+  const navigate = useNavigate();
 
   const fetchSignOut = async () => {
     const res = await signOut(setIsLoggedIn, setCurrentUser);
@@ -116,6 +117,7 @@ export const Header = () => {
     if(res.status === 200) {
       setIsExistFlash(true);
       setFlashMessage({type: "success", message: "ログアウトしました"});
+      navigate("/")
     }
 
   };

@@ -12,7 +12,7 @@ import {
   Spinner
 } from "@chakra-ui/react"
 
-import { sendChangeRequest } from "../lib/api/user";
+import { sendChangeRequest } from "../lib/api/changeUserInformation.js"
 import { useUser } from "../contexts/UserContext";
 import { useFlash } from "../contexts/FlashMessage.js";
 
@@ -25,7 +25,6 @@ export const ConfirmationChangePassword = ({ isOpen, onClose }) => {
     try {
       setIsLoading(true);
       await sendChangeRequest(currentUser.email);
-      setIsLoading(false);
       setIsExistFlash(true);
       setFlashMessage({type: "success", message: "メールを送信しました。"});
       onClose();
@@ -33,6 +32,8 @@ export const ConfirmationChangePassword = ({ isOpen, onClose }) => {
       console.error(e);
       setIsExistFlash(true);
       setFlashMessage({type: "error", message: "メールに失敗しました。"});
+    } finally {
+      setIsLoading(false);
     }
   }
   

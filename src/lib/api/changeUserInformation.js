@@ -1,6 +1,8 @@
 // ユーザー情報変更
 
 import client from "./client";
+import { setHeader } from "./setHeader";
+
 
 // パスワード変更のためのメール送信
 export const sendChangeRequest = (email) => {
@@ -24,3 +26,11 @@ export const hasPermission = async (token) => {
 export const updatePassword = (token, password) => {
   return client.put("/auth/password", {token, password});
 };
+
+
+// ユーザー名、メールアドレス更新
+export const updateUserInformation = (params) => {
+  const headers = setHeader();
+  if(!headers) return;
+  return client.put("/auth", params, { headers })
+}
