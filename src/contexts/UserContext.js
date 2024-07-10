@@ -12,9 +12,14 @@ export const UserProvider = ({ children }) => {
     const checkLoggedInStatus = async () => {
       try {
         const user = await getUser();
-        setIsLoggedIn(user.isLogin);
-        if(user.isLogin) {
-          setCurrentUser(user.data);
+        setIsLoggedIn(user.success);
+        if(user.success) {
+          const filteredUser = {
+            email: user.data.email,
+            id: user.data.id,
+            name: user.data.name
+          };
+          setCurrentUser(filteredUser);
         }
       } catch (e) {
         console.log(e);

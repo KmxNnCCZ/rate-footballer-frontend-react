@@ -12,11 +12,11 @@ import {
   FormControl,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import { useFlash } from "../contexts/FlashMessage.js";
 import { signUp } from "../lib/api/auth.js";
-import { userErrorMessages, emailErrorMessages, passwordErrorMessages } from "../lib/errorMessages.js";
+import { userNameErrorMessages, emailErrorMessages, passwordErrorMessages } from "../lib/errorMessages.js";
 
 export const SignUp = () => {
   const [name, setName] = useState("");
@@ -54,7 +54,7 @@ export const SignUp = () => {
       if(e.response.data.errors) {
         console.log(e.response.data.errors);
         if (e.response.data.errors.name) {
-          setNameError(userErrorMessages[e.response.data.errors.name.join(" ")]);
+          setNameError(userNameErrorMessages[e.response.data.errors.name.join(" ")]);
           console.log(e.response.data.errors.name)
         }
         if (e.response.data.errors.email) {
@@ -63,7 +63,6 @@ export const SignUp = () => {
         if (e.response.data.errors.password) {
           setPasswordError(passwordErrorMessages[e.response.data.errors.password.join(" ")])
         }
-
       }
     }
   };

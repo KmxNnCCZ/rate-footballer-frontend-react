@@ -37,9 +37,15 @@ export const signOut = async (setIsLoggedIn, setCurrentUser) => {
 // ユーザー情報を取得
 export const getUser = async() => {
   const headers = setHeader();
-  if(!headers) return;
-
+  if(!headers) {
+    return {success: false}
+  };
   // ユーザー情報を取得
-  const res = await client.get("/auth/sessions", { headers });
-  return res.data;
+  try {
+    const res = await client.get("/auth/validate_token", { headers });
+    return res.data;
+  } catch (error) {
+    console.error('ユーザー情報の取得中にエラーが発生しました', error);
+    return { isLogin: false };
+  }
 };

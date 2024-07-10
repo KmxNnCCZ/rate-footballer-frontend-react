@@ -38,10 +38,11 @@ export const Login = () => {
   const fetchLogin = async () => {
     try {
       const res = await signIn({ email, password });
+      console.log(res.data.data)
       // レスポンスをもとにクッキーをセット
-      Cookies.set("_access_token", res.headers["accessToken"]);
-      Cookies.set("_client", res.headers["client"]);
-      Cookies.set("_uid", res.headers["uid"]);
+      Cookies.set("_access_token", res.data.data.accessToken);
+      Cookies.set("_client", res.data.data.client);
+      Cookies.set("_uid", res.data.data.uid);
       setIsLoggedIn(true);
       setCurrentUser(res.data.data);
       setIsExistFlash(true);
