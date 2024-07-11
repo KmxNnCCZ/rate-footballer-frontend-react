@@ -7,12 +7,12 @@ import {
   Flex,
   Image,
   Heading,
-  Button,
   Accordion,
 } from "@chakra-ui/react";
 
 import { Loading } from "../components/Loading";
 import { PlayerRatingItem } from "../components/PlayerRatingItem";
+import { SubmitButton } from "../components/SubmitButton";
 import { useUser } from "../contexts/UserContext";
 import { getTeam } from "../lib/api/fetchMatch";
 import { postRate } from "../lib/api/fetchRate";
@@ -152,21 +152,13 @@ export const Rate = () => {
           ))}
         </Accordion>
 
-        <Button
-          as='button'
-          my="20px"
-          w="50%"
-          h="70px"
-          color="#89DA59"
-          bg="white"
-          borderColor='#89DA59'
-          borderRadius="50px"
-          borderWidth="4px"
-          _hover={{ bg: '#89DA59', color: "white" }}
+        <SubmitButton
+          width={"50%"}
+          height={"70px"}
+          borderRadius={"20px"}
           onClick={postRateData}
-        >
-          投稿する
-        </Button>
+          content={"投稿する"}
+        />
       </Box>
     </Box>
   );

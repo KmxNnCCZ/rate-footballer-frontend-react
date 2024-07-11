@@ -8,11 +8,13 @@ import {
   AlertDialogBody,
   AlertDialogHeader,
   AlertDialogFooter,
-  Button,
   Text,
-  Flex
+  Flex,
+  Box
 } from "@chakra-ui/react";
 import { WarningIcon } from "@chakra-ui/icons";
+
+import { SubmitButton } from "./SubmitButton";
 
 
 export const LoginRequiredMessage = ({ isOpen, onClose, cancelRef, message }) => {
@@ -41,36 +43,21 @@ export const LoginRequiredMessage = ({ isOpen, onClose, cancelRef, message }) =>
           </AlertDialogHeader>
           <AlertDialogBody>{message}するにはログインが必要です。</AlertDialogBody>
           <AlertDialogFooter>
-            <Button 
-              as='button'
-              my="20px"
-              h="60px"
-              color="#89DA59"
-              bg="white"
-              borderColor='#89DA59'
-              borderRadius="10px"
-              borderWidth="4px"
-              _hover={{ bg: '#89DA59', color: "white" }}
-              ref={cancelRef}
-              onClick={navigateLoginPage}
-            >
-              ログイン
-            </Button>
-            <Button 
-              as='button'
-              my="20px"
-              h="60px"
-              color="#89DA59"
-              bg="white"
-              borderColor='#89DA59'
-              borderRadius="10px"
-              borderWidth="4px"
-              _hover={{ bg: '#89DA59', color: "white" }}
+            <Box mr={2}>
+              <SubmitButton 
+                height={"60px"}
+                borderRadius={"10px"}
+                ref={cancelRef}
+                onClick={navigateLoginPage}
+                content={"ログイン"}
+              />
+            </Box>
+            <SubmitButton 
+              h={"60px"}
+              borderRadius={"10px"}
               onClick={navigateSignUpPage}
-              ml={3}
-            >
-              未登録の方はこちら
-            </Button>
+              content={"未登録の方はこちら"}
+            />
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialogOverlay>

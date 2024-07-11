@@ -5,13 +5,13 @@ import {
   Tr,
   Td,
   Box,
-  Button,
   Table,
   Tbody,
   useDisclosure
 } from "@chakra-ui/react";
 
 import { LoginRequiredMessage } from "./LoginRequiredMessage";
+import { SubmitButton } from "./SubmitButton";
 import { useUser } from "../contexts/UserContext";
 import positionShortName from "../lib/PositionShortNames";
 
@@ -27,21 +27,13 @@ export const MatchPlayers = ({ lineup, team }) => {
 
   return (
     <Box width="45%" textAlign="center" > {/* ホームチーム */}
-      <Button 
-        as='button'
-        my="20px"
-        w="80%"
-        h="70px"
-        color="#89DA59"
-        bg="white"
-        borderColor='#89DA59'
-        borderRadius="50px"
-        borderWidth="4px"
-        _hover={{ bg: '#89DA59', color: "white" }}
+      <SubmitButton 
+        height={"70px"}
+        width={"80%"}
+        borderRadius={"50px"}
         onClick={isLoggedIn ? navigateToRatePage : onOpen}
-      >
-        採点する
-      </Button>
+        content={"採点する"}
+      />
       <LoginRequiredMessage 
         isOpen={isOpen}
         onClose={onClose}

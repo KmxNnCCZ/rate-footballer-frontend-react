@@ -7,7 +7,6 @@ import {
   Flex,
   Image,
   Heading,
-  Button,
   Accordion,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -15,6 +14,7 @@ import {
 import { Loading } from "../components/Loading";
 import { PlayerRatingItem } from "../components/PlayerRatingItem";
 import { LoginRequiredMessage } from "../components/LoginRequiredMessage";
+import { SubmitButton } from "../components/SubmitButton";
 import { useUser } from "../contexts/UserContext";
 import { editRate } from "../lib/api/fetchRate";
 import { putRate } from "../lib/api/fetchRate";
@@ -146,21 +146,13 @@ export const RateDetailEdit = () => {
           ))}
         </Accordion>
 
-        <Button
-          as='button'
-          my="20px"
-          w="50%"
-          h="70px"
-          color="#89DA59"
-          bg="white"
-          borderColor='#89DA59'
-          borderRadius="50px"
-          borderWidth="4px"
-          _hover={{ bg: '#89DA59', color: "white" }}
+        <SubmitButton
+          width={"50%"}
+          height={"70px"}
+          borderRadius={"50px"}
           onClick={isLoggedIn ? putRateData : onOpen}
-        >
-          更新する
-        </Button>
+          content={"更新する"}
+        />
         <LoginRequiredMessage isOpen={isOpen} onClose={onClose} cancelRef={cancelRef}></LoginRequiredMessage>
       </Box>
     </Box>

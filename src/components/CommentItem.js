@@ -9,10 +9,10 @@ import {
   Box,
   Tooltip,
   Textarea,
-  Button
 } from "@chakra-ui/react"
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
+import { SubmitButton } from "./SubmitButton";
 import { useUser } from "../contexts/UserContext";
 import { updateComment } from "../lib/api/fetchComment";
 import timeAgo from "../lib/timeAgo";
@@ -70,9 +70,13 @@ export const CommentItem = ({comment: initialComment, index, FetchDeleteComment}
               onChange={(e) => changeCommentBody(e.target.value)}
             >
             </Textarea>
-            <Button onClick={fetchUpdateComment}>
-              更新する
-            </Button>
+            <SubmitButton
+              w={"250px"}
+              h={"70px"}
+              borderRadius={"10px"}
+              onClick={fetchUpdateComment}
+              content={"更新する"}
+            />
           </>
         :
           <>

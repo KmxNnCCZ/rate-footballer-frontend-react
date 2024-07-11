@@ -16,6 +16,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { useUser } from '../contexts/UserContext.js';
 import { useFlash } from '../contexts/FlashMessage.js';
 import { signIn } from '../lib/api/auth.js'
+import { SubmitButton } from '../components/SubmitButton.js';
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -90,21 +91,13 @@ export const Login = () => {
         </InputGroup>
       </Center>
       <Center>
-      <Button
-        as='button'
-        my="20px"
-        w="250px"
-        h="70px"
-        color="#89DA59"
-        bg="white"
-        borderColor='#89DA59'
-        borderRadius="10px"
-        borderWidth="4px"
-        _hover={{ bg: '#89DA59', color: "white" }}
+      <SubmitButton
+        width={"250px"}
+        h={"70px"}
+        borderRadius={"10px"}
         onClick={fetchLogin}
-      >
-        ログイン
-      </Button>
+        content={"ログイン"}
+      />
       </Center>
       <Box textAlign="right" color="blue.500">
         <Link to="/signUp">新規登録はこちら</Link>
