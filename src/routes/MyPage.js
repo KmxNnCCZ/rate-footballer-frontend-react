@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import {
   Box,
@@ -58,6 +59,10 @@ export const MyPage = () => {
 
   return (
     <Box>
+      <Helmet>
+        <title>マイページ - Rate Footballer</title>
+      </Helmet>
+
       <Text textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="50px">
         マイページ
       </Text>

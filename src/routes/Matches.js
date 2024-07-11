@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import { 
   Text,
@@ -57,43 +58,48 @@ export const Matches = () => {
 
   return (
     <Box>
-        <Text textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="50px">
-          試合一覧
-        </Text>
-        <Flex mb="20px" justifyContent="right">
-          <Select  width="300px" mr="10px" onChange={(e) => onSeasonSelectChange(e.target.value)}>
-            {seasons.map((season) => (
-              <option key={season} value={season}>
-                {season}
-              </option>
-            ))}
-          </Select>
-          <Select 
-            width="300px"
-            mb="10px"
-            value={selectedMatchDay}
-            onChange={(e) => onMatchdaySelectChange(e.target.value)}
-          >
-            {matchdays.map((matchday) => (
-              <option key={matchday} value={matchday} >
-              {`第${matchday}節`}
+      <Helmet>
+        <title>試合一覧 - Rate Footballer</title>
+      </Helmet>
+
+      <Text textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="50px">
+        試合一覧
+      </Text>
+      
+      <Flex mb="20px" justifyContent="right">
+        <Select  width="300px" mr="10px" onChange={(e) => onSeasonSelectChange(e.target.value)}>
+          {seasons.map((season) => (
+            <option key={season} value={season}>
+              {season}
             </option>
-            ))}
-          </Select>
-        </Flex>
-        <Grid 
-          templateColumns="repeat(auto-fit, minmax(350px, 1fr));" 
-          gap={6}
-          justifyItems="center"
-          >
-          {res.map((data) => (
-            <GridItem key={data.match.matchApiId}>
-              <Link to={`${data.match.matchApiId}`}>
-                <MatchCard matchData={data.match} homeTeam={data.homeTeamData} awayTeam={data.awayTeamData}/>
-              </Link>
-            </GridItem>
           ))}
-        </Grid>
+        </Select>
+        <Select 
+          width="300px"
+          mb="10px"
+          value={selectedMatchDay}
+          onChange={(e) => onMatchdaySelectChange(e.target.value)}
+        >
+          {matchdays.map((matchday) => (
+            <option key={matchday} value={matchday} >
+            {`第${matchday}節`}
+          </option>
+          ))}
+        </Select>
+      </Flex>
+      <Grid 
+        templateColumns="repeat(auto-fit, minmax(350px, 1fr));" 
+        gap={6}
+        justifyItems="center"
+        >
+        {res.map((data) => (
+          <GridItem key={data.match.matchApiId}>
+            <Link to={`${data.match.matchApiId}`}>
+              <MatchCard matchData={data.match} homeTeam={data.homeTeamData} awayTeam={data.awayTeamData}/>
+            </Link>
+          </GridItem>
+        ))}
+      </Grid>
     </Box>
   );
 }

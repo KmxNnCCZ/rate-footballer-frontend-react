@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import {
   Box,
   Button,
@@ -63,6 +64,10 @@ export const UpdatePassword = () => {
 
   return (
     <Box>
+      <Helmet>
+        <title>パスワード変更 - Rate Footballer</title>
+      </Helmet>
+
       <Text textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="50px">
         パスワード変更
       </Text>

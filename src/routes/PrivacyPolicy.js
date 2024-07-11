@@ -1,5 +1,6 @@
 // プライバシーポリシー
 import { Link as ReactRouterLink } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import {
   Text,
@@ -70,6 +71,10 @@ export const PrivacyPolicy = ({ children }) => {
       borderRadius="20px"
       boxShadow="0px 2px 8px rgba(0, 0, 0, 0.1)"
     >
+      <Helmet>
+        <title>プライバシーポリシー - Rate Footballer</title>
+      </Helmet>
+
       <Heading mb="40px">プライバシーポリシー</Heading>
 
       <Text mb="30px" >

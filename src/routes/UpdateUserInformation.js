@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import {
 
@@ -37,8 +38,12 @@ export const UpdateUserInformation = () => {
 
   return ( 
     <Box>
+      <Helmet>
+        <title>ユーザー情報変更 - Rate Footballer</title>
+      </Helmet>
+
       <Text textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="50px">
-        ユーザー情報更新
+        ユーザー情報変更
       </Text>
       <Center>
         <FormControl isInvalid={nameError} maxW="600px" w="100%" mb="16px">

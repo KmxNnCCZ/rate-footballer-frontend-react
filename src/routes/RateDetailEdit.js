@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import {
   Text,
@@ -105,6 +106,10 @@ export const RateDetailEdit = () => {
 
   return (
     <Box>
+      <Helmet>
+        <title>採点編集 - Rate Footballer</title>
+      </Helmet>
+
       <Flex width={{ base: "100%", md: "60%" }} flexDirection={{ base: "column", md: "row" }} alignItems="center" justifyContent="center" mb="30px" mx="auto">
         <Heading textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mr={{ base: "0px", md: "10px" }}>
           {matchDate}

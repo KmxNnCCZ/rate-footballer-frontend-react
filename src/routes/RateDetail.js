@@ -4,6 +4,7 @@ import {
   Link as ReactRouterLink,
   useNavigate
 } from 'react-router-dom';
+import { Helmet } from "react-helmet-async";
 
 import {
   Box,
@@ -69,6 +70,10 @@ export const RateDetail = () => {
 
   return (
     <Box width="80%" mx="auto">
+      <Helmet>
+        <title>採点詳細 - Rate Footballer</title>
+      </Helmet>
+      
       <Flex justifyContent="space-between">
         <Text>{res.userName}</Text>
         {currentUser && currentUser.id === res.userId &&
