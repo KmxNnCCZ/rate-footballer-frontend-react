@@ -2,6 +2,7 @@ import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Flex } from '@chakra-ui/react'
 import { Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 
 import { Header } from './components/Header.js'
 import { Body } from './components/Body.js'
@@ -30,41 +31,42 @@ import { FlashProvider } from './contexts/FlashMessage.js';
 
 function App() {
   return (
-   <ChakraProvider>
-    <UserProvider>
-    <FlashProvider>
-      <Flex
-        direction="column"
-        minHeight="100vh"
-      >
-        <Header />
-        <FlashMessage />
-        <Body
+    <HelmetProvider>
+    <ChakraProvider>
+      <UserProvider>
+      <FlashProvider>
+        <Flex
+          direction="column"
+          minHeight="100vh"
         >
-          <Routes>
-            <Route path="/" element={ <Top /> }></Route>
-            <Route path="login" element={ <Login /> }></Route>
-            <Route path="signUp" element={ <SignUp /> }></Route>
-            <Route path="matches" element={ <Matches /> }></Route>
-            <Route path="/matches/:matchApiId" element={ <Match /> }></Route>
-            <Route path="/matches/:matchApiId/rate" element={ <Rate /> }></Route>
-            <Route path="rates" element={ <Rates /> }></Route>
-            <Route path="rates/:rateId" element={ <RateDetail/> }></Route>
-            <Route path="rates/:rateId/edit" element={ <RateDetailEdit /> }></Route>
-            <Route path="/terms_of_use" element={ <TermOfUse /> }></Route>
-            <Route path="/privacy_policy" element={ <PrivacyPolicy /> }></Route>
-            <Route path="/mypage" element={ <MyPage/> }></Route>
-            <Route path="/user/edit/:token" element={ <UpdatePassword/> }></Route>
-            <Route path="/user/setting" element={ <UpdateUserInformation/> }></Route>
-            <Route path="test" element={ <Test /> }></Route>
-            <Route path="*" element={ <Notfound /> } />
-          </Routes>
-        </Body>
-        <Footer />
-      </Flex>
-    </FlashProvider>
-    </UserProvider>
-   </ChakraProvider>
+          <Header />
+          <FlashMessage />
+          <Body>
+            <Routes>
+              <Route path="/" element={ <Top /> }></Route>
+              <Route path="login" element={ <Login /> }></Route>
+              <Route path="signUp" element={ <SignUp /> }></Route>
+              <Route path="matches" element={ <Matches /> }></Route>
+              <Route path="/matches/:matchApiId" element={ <Match /> }></Route>
+              <Route path="/matches/:matchApiId/rate" element={ <Rate /> }></Route>
+              <Route path="rates" element={ <Rates /> }></Route>
+              <Route path="rates/:rateId" element={ <RateDetail/> }></Route>
+              <Route path="rates/:rateId/edit" element={ <RateDetailEdit /> }></Route>
+              <Route path="/terms_of_use" element={ <TermOfUse /> }></Route>
+              <Route path="/privacy_policy" element={ <PrivacyPolicy /> }></Route>
+              <Route path="/mypage" element={ <MyPage/> }></Route>
+              <Route path="/user/edit/:token" element={ <UpdatePassword/> }></Route>
+              <Route path="/user/setting" element={ <UpdateUserInformation/> }></Route>
+              <Route path="test" element={ <Test /> }></Route>
+              <Route path="*" element={ <Notfound /> } />
+            </Routes>
+          </Body>
+          <Footer />
+        </Flex>
+      </FlashProvider>
+      </UserProvider>
+    </ChakraProvider>
+    </HelmetProvider>
   );
 }
 

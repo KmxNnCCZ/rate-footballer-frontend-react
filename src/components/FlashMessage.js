@@ -44,7 +44,7 @@ export const FlashMessage = () => {
       const timer = setTimeout(() => {
         setIsExistFlash(false);
         setFlashMessage({ type: "", message: "" });
-      }, 4000);
+      }, 3000);
 
       return () => clearTimeout(timer);
     }

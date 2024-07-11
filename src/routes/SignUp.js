@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import {
   Box,
@@ -70,6 +71,10 @@ export const SignUp = () => {
 
   return (
     <Box>
+      <Helmet>
+        <title>新規登録 - Rate Footballer</title>
+      </Helmet>
+
       <Text textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="50px">
         新規登録
       </Text>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from "react-helmet-async";
 
 import { Heading, Input, Button, Box } from "@chakra-ui/react"
 
@@ -29,6 +30,9 @@ export const Test = () => {
   return (
     <>
       <Heading>テストページ(コンソールで取得したデータを見る)</Heading>
+      <Helmet>
+        <title>テスト - Rate Footballer</title>
+      </Helmet>
       <Input
           placeholder="パスを入力" 
           mb="16px"

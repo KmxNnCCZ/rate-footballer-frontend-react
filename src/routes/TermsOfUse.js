@@ -7,6 +7,7 @@ import {
   UnorderedList,
   ListItem,
 } from "@chakra-ui/react"
+import { Helmet } from "react-helmet-async";
 
 const Article = ({ children }) => {
   return (
@@ -58,6 +59,9 @@ export const TermOfUse = () => {
       borderRadius="20px"
       boxShadow="0px 2px 8px rgba(0, 0, 0, 0.1)"
     >
+      <Helmet>
+        <title>利用規約 - Rate Footballer</title>
+      </Helmet>
       <Heading mb="40px">利用規約</Heading>
 
       <Text mb="30px" >

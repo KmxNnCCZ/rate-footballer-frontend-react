@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Cookies from "js-cookie";
 
 import { 
@@ -62,6 +63,10 @@ export const Login = () => {
 
   return (
     <Box>
+      <Helmet>
+        <title>ログイン - Rate Footballer</title>
+      </Helmet>
+      
       <Text textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="50px">
         ログイン
       </Text>

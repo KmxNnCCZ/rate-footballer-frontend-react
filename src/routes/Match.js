@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import { Helmet } from "react-helmet-async";
 
 import {
   Text,
@@ -52,6 +53,10 @@ export const Match = () => {
 
   return (
     <Box>
+      <Helmet>
+        <title>試合詳細 - Rate Footballer</title>
+      </Helmet>
+
       <Heading textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="20px"> {/* タイトル */}
         試合詳細
       </Heading>
