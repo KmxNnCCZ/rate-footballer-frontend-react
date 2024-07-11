@@ -38,7 +38,6 @@ export const Login = () => {
   const fetchLogin = async () => {
     try {
       const res = await signIn({ email, password });
-      console.log(res.data.data)
       // レスポンスをもとにクッキーをセット
       Cookies.set("_access_token", res.data.data.accessToken);
       Cookies.set("_client", res.data.data.client);

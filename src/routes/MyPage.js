@@ -46,7 +46,7 @@ export const MyPage = () => {
     };
 
     checkLoggedInStatus();
-  }, [userLoading, isLoggedIn, navigate]);
+  }, [userLoading, isLoggedIn, navigate, currentUser]);
 
   if (userLoading) {
     return <Loading />;
