@@ -12,9 +12,9 @@ import {
   Spinner
 } from "@chakra-ui/react"
 
-import { sendChangeRequest } from "../lib/api/changeUserInformation.js"
-import { useUser } from "../contexts/UserContext";
-import { useFlash } from "../contexts/FlashMessage.js";
+import { sendChangeRequest } from "../../lib/api/changeUserInformation.js"
+import { useUser } from "../../contexts/UserContext.js";
+import { useFlash } from "../../contexts/FlashMessage.js";
 
 export const ConfirmationChangePassword = ({ isOpen, onClose }) => {
   const { currentUser } = useUser();

@@ -14,11 +14,11 @@ import {
   Spinner,
 } from "@chakra-ui/react"
 
-import { updateUserInformation } from "../lib/api/changeUserInformation.js";
-import { useUser } from "../contexts/UserContext.js";
-import { useFlash } from "../contexts/FlashMessage.js";
-import { userNameErrorMessages, emailErrorMessages } from "../lib/errorMessages.js";
-import { getUser } from "../lib/api/auth.js";
+import { updateUserInformation } from "../../lib/api/changeUserInformation.js";
+import { useUser } from "../../contexts/UserContext.js";
+import { useFlash } from "../../contexts/FlashMessage.js";
+import { userNameErrorMessages, emailErrorMessages } from "../../lib/errorMessages.js";
+import { getUser } from "../../lib/api/auth.js";
 
 export const ConfirmationChangeUserInformation = ({ isOpen, onClose, name, email, setNameError, setEmaiError }) => {
   const { setIsExistFlash, setFlashMessage} = useFlash();

@@ -16,6 +16,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import { useFlash } from "../contexts/FlashMessage.js";
 import { signUp } from "../lib/api/auth.js";
+import { SubmitButton } from "../components/SubmitButton.js";
 import { userNameErrorMessages, emailErrorMessages, passwordErrorMessages } from "../lib/errorMessages.js";
 
 export const SignUp = () => {
@@ -70,7 +71,7 @@ export const SignUp = () => {
   return (
     <Box>
       <Text textAlign="center" fontSize="24px" color="gray.700" fontWeight="bold" mb="50px">
-        ユーザー新規登録
+        新規登録
       </Text>
 
       <Center>
@@ -114,21 +115,13 @@ export const SignUp = () => {
         </FormControl>
       </Center>
       <Center>
-      <Button
-        as='button'
-        my="20px"
-        w="250px"
-        h="70px"
-        color="#89DA59"
-        bg="white"
-        borderColor='#89DA59'
-        borderRadius="10px"
-        borderWidth="4px"
-        _hover={{ bg: '#89DA59', color: "white" }}
+      <SubmitButton
+        width={"250px"}
+        height={"70px"}
+        borderRadius={"10px"}
         onClick={register}
-      >
-        登録する
-      </Button>
+        content={"登録する"}
+      />
       </Center>
       <Box textAlign="right" color="blue.500">
         <Link to="/login">ログインはこちら</Link>

@@ -43,6 +43,7 @@ export const getUser = async() => {
   // ユーザー情報を取得
   try {
     const res = await client.get("/auth/validate_token", { headers });
+    console.log(res);
     return res.data;
   } catch (error) {
     console.error('ユーザー情報の取得中にエラーが発生しました', error);

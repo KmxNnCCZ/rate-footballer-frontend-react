@@ -5,13 +5,13 @@ import {
   Text,
   Flex,
   Textarea,
-  Button,
   useDisclosure,
   Stack
 } from "@chakra-ui/react";
 
 import { LoginRequiredMessage } from "./LoginRequiredMessage";
 import { CommentItem } from "./CommentItem";
+import { SubmitButton } from "./SubmitButton";
 import { useUser } from "../contexts/UserContext";
 import { postComment, deleteComment } from "../lib/api/fetchComment";
 
@@ -62,21 +62,13 @@ export const Comment = ({rateId, comments: initialComments}) => {
             value={commentBody || ""}
             onChange={(e) => setCommentBody(e.target.value)}
           ></Textarea>
-          <Button
-            as='button'
-            my="20px"
-            w="250px"
-            h="70px"
-            color="#89DA59"
-            bg="white"
-            borderColor='#89DA59'
-            borderRadius="50px"
-            borderWidth="4px"
-            _hover={{ bg: '#89DA59', color: "white" }}
+          <SubmitButton
+            w={"250px"}
+            h={"70px"}
+            borderRadius={"50px"}
             onClick={isLoggedIn ? fetchPostComment : onOpen}
-          >
-            投稿する
-          </Button>
+            content={"投稿する"}
+          />
           <LoginRequiredMessage
             isOpen={isOpen}
             onClose={onClose}

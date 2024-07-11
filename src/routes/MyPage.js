@@ -3,33 +3,25 @@ import { useNavigate } from "react-router-dom";
 
 import {
   Box,
-  Button,
   Text,
   Flex,
   useDisclosure
 } from "@chakra-ui/react";
 
 import { Loading } from "../components/Loading";
-import { ConfirmationChangePassword } from "../components/ConfirmationChangePassword";
+import { ConfirmationChangePassword } from "../components/modals/ConfirmationChangePassword";
+import { SubmitButton } from "../components/SubmitButton";
 import { useUser } from "../contexts/UserContext";
 
 const CustomButton = ({children, onClick}) => {
   return(
-    <Button
-      as='button'
-      my="20px"
-      w="500px"
-      h="70px"
-      color="#89DA59"
-      bg="white"
-      borderColor='#89DA59'
-      borderRadius="10px"
-      borderWidth="4px"
-      _hover={{ bg: '#89DA59', color: "white" }}
+    <SubmitButton
+      height={"70px"}
+      width={"500px"}
+      borderRadius={"10px"}
       onClick={onClick}
-    >
-      {children}
-    </Button>
+      content={children}
+    />
   )
 }
  

@@ -9,12 +9,12 @@ import {
   FormControl,
   Input,
   FormErrorMessage,
-  Button,
   useDisclosure
 } from "@chakra-ui/react";
 
 import { Loading } from "../components/Loading";
-import { ConfirmationChangeUserInformation } from "../components/ConfirmationChangeUserInformation";
+import { ConfirmationChangeUserInformation } from "../components/modals/ConfirmationChangeUserInformation";
+import { SubmitButton } from "../components/SubmitButton";
 import { useUser } from "../contexts/UserContext";
 
 export const UpdateUserInformation = () => {
@@ -63,21 +63,13 @@ export const UpdateUserInformation = () => {
       </Center>
 
       <Center>
-      <Button
-        as='button'
-        my="20px"
-        w="250px"
-        h="70px"
-        color="#89DA59"
-        bg="white"
-        borderColor='#89DA59'
-        borderRadius="10px"
-        borderWidth="4px"
-        _hover={{ bg: '#89DA59', color: "white" }}
+      <SubmitButton
+        width={"250px"}
+        height={"70px"}
+        borderRadius={"10px"}
         onClick={onOpen}
-      >
-        変更する
-      </Button>
+        content={"変更する"}
+      />
       <ConfirmationChangeUserInformation
         isOpen={isOpen}
         onClose={onClose}
