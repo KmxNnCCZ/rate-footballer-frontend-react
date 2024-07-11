@@ -17,5 +17,5 @@ export const SubmitButton = ({width, height, borderRadius, onClick, content}) =>
     >
       {content}
   </Button>
-  )
-}
+  );
+};

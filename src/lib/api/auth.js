@@ -1,4 +1,5 @@
 import client from "./client";
+import Cookies from 'js-cookie';
 import { setHeader } from "./setHeader";
 
 // client.httpメソッド（path, params）
@@ -21,9 +22,9 @@ export const signOut = async (setIsLoggedIn, setCurrentUser) => {
   try {
     const res = await client.delete("auth/sign_out", { headers });
     // クッキー削除
-    document.cookie = '_access_token=; max-age=0;';
-    document.cookie = '_client=; max-age=0;';
-    document.cookie = '_uid=; max-age=0;';
+    Cookies.remove('_access_token');
+    Cookies.remove('_client');
+    Cookies.remove('_uid');
     setIsLoggedIn(false);
     setCurrentUser(null);
     return res;
@@ -43,7 +44,6 @@ export const getUser = async() => {
   // ユーザー情報を取得
   try {
     const res = await client.get("/auth/validate_token", { headers });
-    console.log(res);
     return res.data;
   } catch (error) {
     console.error('ユーザー情報の取得中にエラーが発生しました', error);

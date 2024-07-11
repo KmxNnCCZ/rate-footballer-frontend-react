@@ -14,7 +14,7 @@ import {
 
 import { Loading } from "../components/Loading";
 import { PlayerRatingItem } from "../components/PlayerRatingItem";
-import { LoginRequiredMessage } from "../components/LoginRequiredMessage";
+import { LoginRequiredMessage } from "../components/modals/LoginRequiredMessage";
 import { SubmitButton } from "../components/SubmitButton";
 import { useUser } from "../contexts/UserContext";
 import { editRate } from "../lib/api/fetchRate";

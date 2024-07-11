@@ -10,7 +10,7 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 
-import { LoginRequiredMessage } from "./LoginRequiredMessage";
+import { LoginRequiredMessage } from "./modals/LoginRequiredMessage";
 import { SubmitButton } from "./SubmitButton";
 import { useUser } from "../contexts/UserContext";
 import positionShortName from "../lib/PositionShortNames";

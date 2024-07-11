@@ -9,7 +9,7 @@ import {
   Stack
 } from "@chakra-ui/react";
 
-import { LoginRequiredMessage } from "./LoginRequiredMessage";
+import { LoginRequiredMessage } from "./modals/LoginRequiredMessage";
 import { CommentItem } from "./CommentItem";
 import { SubmitButton } from "./SubmitButton";
 import { useUser } from "../contexts/UserContext";

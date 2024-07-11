@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { WarningIcon } from "@chakra-ui/icons";
 
-import { SubmitButton } from "./SubmitButton";
+import { SubmitButton } from "../SubmitButton";
 
 
 export const LoginRequiredMessage = ({ isOpen, onClose, cancelRef, message }) => {
@@ -47,7 +47,6 @@ export const LoginRequiredMessage = ({ isOpen, onClose, cancelRef, message }) =>
               <SubmitButton 
                 height={"60px"}
                 borderRadius={"10px"}
-                ref={cancelRef}
                 onClick={navigateLoginPage}
                 content={"ログイン"}
               />
