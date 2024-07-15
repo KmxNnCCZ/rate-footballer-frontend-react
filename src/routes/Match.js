@@ -29,7 +29,7 @@ export const Match = () => {
     const fetchMatch = async () => {
       try {
         const res = await getMatch(matchApiId);
-        // console.log(JSON.stringify(res, null, 2));
+        console.log(JSON.stringify(res, null, 2));
         setMatchData(res.data);
         setLoading(false); // データの読み込みが完了
       } catch (error) {

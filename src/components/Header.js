@@ -13,6 +13,8 @@ import {
   Text
 } from '@chakra-ui/react';
 import { HamburgerIcon, SmallCloseIcon } from '@chakra-ui/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserPlus, faArrowRightToBracket, faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 import { useUser } from "../contexts/UserContext.js";
 import { useFlash } from "../contexts/FlashMessage.js";
@@ -165,16 +167,18 @@ export const Header = () => {
                       <>
                         <Link to="#"><MenuItem>ランキング</MenuItem></Link>
                         <Link to="/mypage"><MenuItem>マイページ</MenuItem></Link>
-                        <Link onClick={fetchSignOut}><MenuItem>ログアウト</MenuItem></Link>
+                        <Link onClick={fetchSignOut}>
+                          <MenuItem>ログアウト</MenuItem>
+                        </Link>
                       </>
                     ) : (
                       <>
                         <Link to="signUp">
-                          <MenuItem>
-                            新規登録
-                          </MenuItem>
+                          <MenuItem>新規登録</MenuItem>
                         </Link>
-                        <Link to="login"><MenuItem>ログイン</MenuItem></Link>
+                        <Link to="login">
+                          <MenuItem>ログイン</MenuItem>
+                        </Link>
                       </>
                     )}
                   </MenuList>
@@ -199,15 +203,26 @@ export const Header = () => {
                   <HeaderItem itemPath="#">ランキング</HeaderItem>
                   <HeaderItem itemPath="/mypage">マイページ</HeaderItem>
                   <Box onClick={fetchSignOut}>
-                    <CustomButton itemPath="">ログアウト</CustomButton>
+                    <CustomButton itemPath="">
+                      <Box mr="10px">
+                        <FontAwesomeIcon icon={faArrowRightFromBracket}/>
+                      </Box>
+                      ログアウト
+                    </CustomButton>
                   </Box>
                 </>
               ) : (
                 <>
                 <CustomButton itemPath={"/signup"}>
+                  <Box mr="10px">
+                    <FontAwesomeIcon icon={faUserPlus}/>
+                  </Box>
                   新規登録
                 </CustomButton>
                 <CustomButton itemPath={"/login"}>
+                  <Box mr="10px">
+                    <FontAwesomeIcon icon={faArrowRightToBracket}/>
+                  </Box>
                   ログイン
                 </CustomButton>
                 </>

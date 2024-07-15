@@ -47,7 +47,7 @@ export const Rate = () => {
 
         const res = await getTeam(matchApiId, team);
         setTeamData(res.data);
-        const initialPlayerRates = res.data.lineup.map(player => ({
+        const initialPlayerRates = sortPlayer(res.data.lineup).map(player => ({
           playerApiId: player.id,
           score: 5.0,
           assessment: ""
@@ -143,7 +143,7 @@ export const Rate = () => {
 
       <Box boxShadow="0px 2px 8px rgba(0, 0, 0, 0.1)" textAlign="center">
         <Accordion allowMultiple>
-          {sortPlayer(teamData.lineup).map((player, index) => (
+          {teamData.lineup.map((player, index) => (
             <PlayerRatingItem
               key={player.id}
               player={player}
