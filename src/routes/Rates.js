@@ -23,13 +23,13 @@ export const Rates = () => {
   useEffect(() => {
     const fetchRatesData = async () => {
       const rateList = await getRateList()
+      // マイページから飛んできた時の処理
       const queryParams = new URLSearchParams(location.search);
       const myPosts = queryParams.get('myPosts');
       let filteredRates = rateList.data;
       if (myPosts === 'true' && isLoggedIn) {
         filteredRates = filteredRates.filter(rate => rate.userId === currentUser.id);
       }
-
       setRes(filteredRates.reverse());
       setLoading(false); // データの読み込みが完了
       // console.log(JSON.stringify(res.data, null,2))

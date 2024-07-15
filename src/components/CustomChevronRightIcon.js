@@ -6,6 +6,7 @@ export const CustomChevronRightIcon = () => {
       bgColor="#83BD41"
       color="#FFFFFF"
       borderRadius="50%"
+      mb="5px"
       mr="5px"
     />
   )
