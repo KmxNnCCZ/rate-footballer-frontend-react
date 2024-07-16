@@ -22,7 +22,6 @@ import { PlayerRatedItem } from '../components/PlayerRatingItem';
 import { Comment } from '../components/Comment';
 import { useUser } from '../contexts/UserContext';
 import { getRate, deleteRate } from '../lib/api/fetchRate';
-import sortPlayer from '../lib/sortPlayer';
 
 
 export const RateDetail = () => {
@@ -103,7 +102,7 @@ export const RateDetail = () => {
         </Flex>
         <Box>
           <Accordion allowMultiple>
-            {sortPlayer(res.scores).map((score) => (
+            {res.scores.map((score) => (
               <PlayerRatedItem
                 key={score.playerId}
                 playerPosition={score.position}

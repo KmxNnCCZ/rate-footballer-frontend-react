@@ -9,16 +9,17 @@ import {
   GridItem,
   Card,
   CardBody,
-  CardHeader
+  CardHeader,
+  Image
 } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFutbol, faStar, faComments, faRankingStar } from '@fortawesome/free-solid-svg-icons';
 
-const IntroduceCard = ({ icon, heading, explanation, bgColor }) => {
+const IntroduceCard = ({ icon, heading, explanation, bgColor, gif }) => {
   return (
     <GridItem>
       <Card
-        h="800px"
+        h="700px"
         boxShadow="lg"
         transition="transform 0.3s, box-shadow 0.3s"
         _hover={{ transform: "scale(1.05)", boxShadow: "2xl" }}
@@ -44,8 +45,12 @@ const IntroduceCard = ({ icon, heading, explanation, bgColor }) => {
             </Text>
             <Text>{explanation}</Text>
           </Box>
-          <Box bgColor="gray.200" h="300px" borderRadius="md" mt="10px" display="flex" justifyContent="center" alignItems="center">
-            <Text color="gray.500">画像プレースホルダー</Text>
+          <Box
+            border="1px"
+            display="flex"
+            justifyContent="center"
+          >
+            <Image src={`/images/${gif}.gif`} alt="gif" h="200px" w="360px"/>
           </Box>
         </CardBody>
       </Card>
@@ -82,6 +87,7 @@ export const Top = () => {
               heading={"試合情報をチェック"}
               explanation={"最新の試合情報をすぐに確認し、プレミアリーグの試合を見逃さないようにしましょう！"}
               bgColor="teal.400"
+              gif="chackMatchInformation"
             />
           </Link>
           <Link to="/rates">
@@ -90,6 +96,7 @@ export const Top = () => {
               heading={"自分だけの選手採点"}
               explanation={"試合ごとに出場した選手を採点し、あなたの視点で評価を投稿しましょう。"}
               bgColor="yellow.400"
+              gif="ratePlayer"
             />
           </Link>
           <Link to="/rates">
@@ -98,6 +105,7 @@ export const Top = () => {
               heading={"ファン同士の熱い議論"}
               explanation={"他のファンの評価にコメントして、試合についての意見を交わし、共感や新しい視点を見つけましょう。"}
               bgColor="blue.400"
+              gif="userComments"
             />
           </Link>
           <Link to="/ranking">
@@ -106,6 +114,7 @@ export const Top = () => {
               heading={"人気選手のランキングをチェック"}
               explanation={"各選手の平均採点を元にしたランキングを見て、今シーズンのトッププレイヤーを確認しましょう。"}
               bgColor="purple.400"
+              gif=""
             />
           </Link>
         </Grid>
