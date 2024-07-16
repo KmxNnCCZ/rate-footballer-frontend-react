@@ -18,7 +18,6 @@ import {
 import { getMatch } from "../lib/api/fetchMatch";
 import { MatchPlayers } from "../components/MatchPlayers";
 import { Loading } from "../components/Loading";
-import sortPlayer from "../lib/sortPlayer";
 
 export const Match = () => {
   const { matchApiId } = useParams();
@@ -116,8 +115,8 @@ export const Match = () => {
 
       <Box mt="30px"> {/* 選手ラインナップ */}
         <Flex justifyContent="space-between">
-          <MatchPlayers lineup={sortPlayer(matchData.homeTeam.lineup)} team={"home"} matchApiId={matchApiId}/>
-          <MatchPlayers lineup={sortPlayer(matchData.awayTeam.lineup)} team={"away"} matchApiId={matchApiId}/>
+          <MatchPlayers lineup={matchData.homeTeam.lineup} team={"home"} matchApiId={matchApiId}/>
+          <MatchPlayers lineup={matchData.awayTeam.lineup} team={"away"} matchApiId={matchApiId}/>
         </Flex>
       </Box>
 

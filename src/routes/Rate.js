@@ -17,7 +17,6 @@ import { SubmitButton } from "../components/SubmitButton";
 import { useUser } from "../contexts/UserContext";
 import { getTeam } from "../lib/api/fetchMatch";
 import { postRate } from "../lib/api/fetchRate";
-import sortPlayer from "../lib/sortPlayer";
 
 
 export const Rate = () => {
@@ -47,7 +46,7 @@ export const Rate = () => {
 
         const res = await getTeam(matchApiId, team);
         setTeamData(res.data);
-        const initialPlayerRates = sortPlayer(res.data.lineup).map(player => ({
+        const initialPlayerRates = res.data.lineup.map(player => ({
           playerApiId: player.id,
           score: 5.0,
           assessment: ""
