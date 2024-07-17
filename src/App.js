@@ -25,6 +25,7 @@ import { PrivacyPolicy } from './routes/PrivacyPolicy.js';
 import { MyPage } from './routes/MyPage.js';
 import { UpdatePassword } from './routes/UpdatePassword.js';
 import { UpdateUserInformation } from './routes/UpdateUserInformation.js';
+import { Ranking } from './routes/Ranking.js';
 
 import { UserProvider } from './contexts/UserContext.js';
 import { FlashProvider } from './contexts/FlashMessage.js';
@@ -57,6 +58,7 @@ function App() {
               <Route path="/mypage" element={ <MyPage/> }></Route>
               <Route path="/user/edit/:token" element={ <UpdatePassword/> }></Route>
               <Route path="/user/setting" element={ <UpdateUserInformation/> }></Route>
+              <Route path="/ranking" element={ <Ranking /> }></Route>
               <Route path="test" element={ <Test /> }></Route>
               <Route path="*" element={ <Notfound /> } />
             </Routes>

@@ -46,7 +46,6 @@ const IntroduceCard = ({ icon, heading, explanation, bgColor, gif }) => {
             <Text>{explanation}</Text>
           </Box>
           <Box
-            border="1px"
             display="flex"
             justifyContent="center"
           >

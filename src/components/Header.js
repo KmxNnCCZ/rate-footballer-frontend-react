@@ -165,7 +165,7 @@ export const Header = () => {
                     <Link to="matches"><MenuItem>試合一覧</MenuItem></Link>
                     {isLoggedIn ? (
                       <>
-                        <Link to="#"><MenuItem>ランキング</MenuItem></Link>
+                        <Link to="/ranking"><MenuItem>ランキング</MenuItem></Link>
                         <Link to="/mypage"><MenuItem>マイページ</MenuItem></Link>
                         <Link onClick={fetchSignOut}>
                           <MenuItem>ログアウト</MenuItem>
@@ -200,7 +200,7 @@ export const Header = () => {
               </HeaderItem>
               {isLoggedIn ? (
                 <>
-                  <HeaderItem itemPath="#">ランキング</HeaderItem>
+                  <HeaderItem itemPath="/ranking">ランキング</HeaderItem>
                   <HeaderItem itemPath="/mypage">マイページ</HeaderItem>
                   <Box onClick={fetchSignOut}>
                     <CustomButton itemPath="">
