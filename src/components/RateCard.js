@@ -16,7 +16,12 @@ import positionShortName from "../lib/PositionShortNames";
 export const RateCard = ({ scores, matchday, teamShortName, teamCrestUrl, season, isOwner }) => {
   const matchDate = `PL ${season} 第${matchday}節`;
   return(
-    <Card w="500px">
+    <Card 
+      w="500px"
+      h="auto"
+      transition="transform 0.2s ease-out"
+      _hover={{ transform: "scale(1.02)" }}
+    >
       <CardHeader>
         <Flex justifyContent="space-between" fontSize="sm" as="b" alignItems="center">
           <Flex alignItems="center">

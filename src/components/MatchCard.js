@@ -17,7 +17,12 @@ export const MatchCard = ({ matchData, homeTeam, awayTeam }) => {
   const result = `${matchData.homeTeamScore} - ${matchData.awayTeamScore}`
 
   return(
-    <Card w="350px" h="215px">
+    <Card
+      w="350px"
+      h="auto"
+      transition="transform 0.2s ease-out"
+      _hover={{ transform: "scale(1.02)" }}
+    >
       <CardHeader my="-20px" >
         <Flex justify="space-between">
           <Flex direction="column" align="flex-start">
