@@ -23,11 +23,11 @@ export const UpdateUserInformation = () => {
   const [email, setEmail] = useState("");
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
-  const { isLoggedIn, userLoading } = useUser();
+  const { isLoggedIn, isUserLoading } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure()
   const navigate = useNavigate();
 
-  if (userLoading) {
+  if (isUserLoading) {
     return <Loading />;
   }
 

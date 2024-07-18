@@ -22,7 +22,7 @@ import { postRate } from "../lib/api/fetchRate";
 export const Rate = () => {
 
   const { matchApiId } = useParams();
-  const { isLoggedIn, userLoading } = useUser();
+  const { isLoggedIn, isUserLoading } = useUser();
   const [teamData, setTeamData] = useState({});
   const [loading, setLoading] = useState(true);
   const [ team, setTeam ] = useState("");
@@ -35,7 +35,7 @@ export const Rate = () => {
 
   useEffect(() => {
     const fetchMatch = async () => {
-      if (!userLoading && !isLoggedIn) {
+      if (!isUserLoading && !isLoggedIn) {
         navigate(`/matches/${matchApiId}`);
       }
 
@@ -60,7 +60,7 @@ export const Rate = () => {
     };
 
     fetchMatch();
-  }, [matchApiId, isLoggedIn, navigate, location.search, userLoading]);
+  }, [matchApiId, isLoggedIn, navigate, location.search, isUserLoading]);
 
   const incrementScore = (i) => {
     setPlayerRates((prevPlayerRates) => {
@@ -105,7 +105,7 @@ export const Rate = () => {
     }
   };
 
-  if (userLoading || loading) {
+  if (isUserLoading || loading) {
     return <Loading />;
   }
 

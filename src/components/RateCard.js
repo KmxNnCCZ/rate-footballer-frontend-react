@@ -10,7 +10,7 @@ import {
   Image
 } from "@chakra-ui/react";
 
-import positionShortName from "../lib/PositionShortNames";
+import { positionShortName } from "../lib/PositionShortNames";
 
 
 export const RateCard = ({ scores, matchday, teamShortName, teamCrestUrl, season, isOwner }) => {

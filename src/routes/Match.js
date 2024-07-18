@@ -15,25 +15,26 @@ import {
   CardBody,
 } from "@chakra-ui/react";
 
+import { NotFound } from "./NotFound";
 import { getMatch } from "../lib/api/fetchMatch";
 import { MatchPlayers } from "../components/MatchPlayers";
 import { Loading } from "../components/Loading";
 
 export const Match = () => {
   const { matchApiId } = useParams();
-  const [matchData, setMatchData] = useState({});
+  const [matchData, setMatchData] = useState();
   const [loading, setLoading] = useState(true); // 読み込み状態を管理するstate
 
   useEffect(() => {
     const fetchMatch = async () => {
       try {
         const res = await getMatch(matchApiId);
-        console.log(JSON.stringify(res, null, 2));
+        // console.log(JSON.stringify(res, null, 2));
         setMatchData(res.data);
-        setLoading(false); // データの読み込みが完了
-      } catch (error) {
-        // console.error("Error fetching match:", error);
-        setLoading(false); // エラーが発生してもローディングを終了する
+      } catch (e) {
+        console.error("Error fetching match:", e);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -42,10 +43,13 @@ export const Match = () => {
 
   // データが読み込まれるまでローディングを表示
   if (loading) {
-    return (
-      <Loading />
-    );
+    return <Loading />
   };
+
+  // matchDataが存在しない場合はNotFoundを返す
+  if (!matchData) {
+    return <NotFound/>
+  }
 
   const matchday = `第${matchData.matchday}節`;
   const season = `${matchData.season.startDate.slice(2,4)}-${matchData.season.endDate.slice(2,4)}シーズン`;

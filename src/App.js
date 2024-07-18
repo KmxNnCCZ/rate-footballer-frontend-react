@@ -12,20 +12,21 @@ import { FlashMessage } from './components/FlashMessage.js';
 import { Top } from './routes/Top';
 import { Login } from './routes/Login';
 import { SignUp } from './routes/SignUp';
-import { Notfound } from './routes/Notfound';
-import { Matches } from './routes/Matches.js';
-import { Match } from './routes/Match.js';
-import { Test } from './routes/Test.js';
-import { Rate } from './routes/Rate.js';
-import { Rates } from './routes/Rates.js';
-import { RateDetail } from './routes/RateDetail.js';
-import { RateDetailEdit } from './routes/RateDetailEdit.js';
-import { TermOfUse } from './routes/TermsOfUse.js';
-import { PrivacyPolicy } from './routes/PrivacyPolicy.js';
-import { MyPage } from './routes/MyPage.js';
-import { UpdatePassword } from './routes/UpdatePassword.js';
-import { UpdateUserInformation } from './routes/UpdateUserInformation.js';
-import { Ranking } from './routes/Ranking.js';
+import { Matches } from './routes/Matches';
+import { Match } from './routes/Match';
+import { Rate } from './routes/Rate';
+import { Rates } from './routes/Rates';
+import { RateDetail } from './routes/RateDetail';
+import { RateDetailEdit } from './routes/RateDetailEdit';
+import { TermOfUse } from './routes/TermsOfUse';
+import { PrivacyPolicy } from './routes/PrivacyPolicy';
+import { MyPage } from './routes/MyPage';
+import { UpdatePassword } from './routes/UpdatePassword';
+import { UpdateUserInformation } from './routes/UpdateUserInformation';
+import { Ranking } from './routes/Ranking';
+import { NotFound } from './routes/NotFound';
+
+import { Test } from './routes/Test';
 
 import { UserProvider } from './contexts/UserContext.js';
 import { FlashProvider } from './contexts/FlashMessage.js';
@@ -60,7 +61,7 @@ function App() {
               <Route path="/user/setting" element={ <UpdateUserInformation/> }></Route>
               <Route path="/ranking" element={ <Ranking /> }></Route>
               <Route path="test" element={ <Test /> }></Route>
-              <Route path="*" element={ <Notfound /> } />
+              <Route path="*" element={ <NotFound /> } />
             </Routes>
           </Body>
           <Footer />

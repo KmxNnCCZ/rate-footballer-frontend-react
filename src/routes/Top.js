@@ -113,7 +113,7 @@ export const Top = () => {
               heading={"人気選手のランキングをチェック"}
               explanation={"各選手の平均採点を元にしたランキングを見て、今シーズンのトッププレイヤーを確認しましょう。"}
               bgColor="purple.400"
-              gif=""
+              gif="ranking"
             />
           </Link>
         </Grid>

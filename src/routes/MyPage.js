@@ -28,20 +28,20 @@ const CustomButton = ({children, onClick}) => {
  
 export const MyPage = () => {
   const navigate = useNavigate()
-  const {isLoggedIn, currentUser, userLoading } = useUser();
+  const {isLoggedIn, currentUser, isUserLoading } = useUser();
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   useEffect(() => {
     const checkLoggedInStatus = () => {
-      if (!userLoading && !isLoggedIn) {
+      if (!isUserLoading && !isLoggedIn) {
         navigate("/");
       }
     };
 
     checkLoggedInStatus();
-  }, [userLoading, isLoggedIn, navigate, currentUser]);
+  }, [isUserLoading, isLoggedIn, navigate, currentUser]);
 
-  if (userLoading) {
+  if (isUserLoading) {
     return <Loading />;
   }
 
