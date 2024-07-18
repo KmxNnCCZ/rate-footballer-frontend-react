@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
+import { Loading } from "../components/Loading";
 import { useUser } from '../contexts/UserContext.js';
 import { useFlash } from '../contexts/FlashMessage.js';
 import { signIn } from '../lib/api/auth.js'
@@ -23,7 +24,7 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRevealPassword, setIsRevealPassword] = useState(false);
-  const { isLoggedIn, setIsLoggedIn, setCurrentUser } = useUser();
+  const { isLoggedIn, setIsLoggedIn, setCurrentUser, isUserLoading } = useUser();
   const { setIsExistFlash, setFlashMessage } = useFlash();
   const navigate = useNavigate();
 
@@ -54,6 +55,10 @@ export const Login = () => {
       setIsExistFlash(true);
       setFlashMessage({type: "error", message: "ログインに失敗しました"});
     }
+  }
+
+  if (isUserLoading) {
+    return <Loading />;
   }
 
   // すでにログイン済みであればトップページに遷移

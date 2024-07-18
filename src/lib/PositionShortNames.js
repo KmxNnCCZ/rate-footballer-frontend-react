@@ -1,4 +1,4 @@
-const positionShortName = {
+export const positionShortName = {
   "Goalkeeper": "GK",
   "Defence": "DF",
   "Defender": "DF",
@@ -15,6 +15,23 @@ const positionShortName = {
   "Offence": "FW",
   "Forward": "FW",
   "Centre-Forward": "CF",
-}
+};
 
-export default positionShortName;
+export const positionMap = {
+  "Goalkeeper": "GK",
+  "Defence": "DF",
+  "Defender": "DF",
+  "Left-Back": "DF",
+  "Centre-Back": "DF",
+  "Right-Back": "DF",
+  "Defensive Midfield": "MF",
+  "Central Midfield": "MF",
+  "Midfielder": "MF",
+  "Midfield": "MF",
+  "Attacking Midfield": "MF",
+  "Left Winger": "FW",
+  "Right Winger": "FW",
+  "Offence": "FW",
+  "Forward": "FW",
+  "Centre-Forward": "FW",
+};

@@ -17,12 +17,12 @@ import { Loading } from "../components/Loading";
 
 
 export const Matches = () => {
-  const seasons = ["23-24", "22-23", "21-22"]
   const [season, setSeason] = useState("23-24");
   const [res, setRes] = useState([]);
   const [selectedMatchDay, setSelectedMatchDay] = useState(38);
   const [loading, setLoading] = useState(true); // 読み込み状態を管理するstate
 
+  const seasons = ["23-24", "22-23", "21-22"]
   const matchdays = [...Array(38)].map((_, i) => i+1)
 
   const fetchMatchesData = async (season, matchday) => {
@@ -51,9 +51,7 @@ export const Matches = () => {
 
   // データが読み込まれるまでローディングを表示
   if (loading) {
-    return (
-      <Loading />
-    );
+    return <Loading />
   };
 
   return (

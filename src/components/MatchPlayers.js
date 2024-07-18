@@ -13,7 +13,7 @@ import {
 import { LoginRequiredMessage } from "./modals/LoginRequiredMessage";
 import { SubmitButton } from "./SubmitButton";
 import { useUser } from "../contexts/UserContext";
-import positionShortName from "../lib/PositionShortNames";
+import { positionShortName } from "../lib/PositionShortNames";
 
 export const MatchPlayers = ({ lineup, team }) => {
   const { isLoggedIn } = useUser();

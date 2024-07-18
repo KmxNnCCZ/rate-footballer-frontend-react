@@ -6,7 +6,7 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   const [ currentUser, setCurrentUser ] = useState(null);
-  const [ userLoading, setUserLoading ] = useState(true);
+  const [ isUserLoading, setisUserLoading ] = useState(true);
 
   useEffect(() => {
     const checkLoggedInStatus = async () => {
@@ -24,14 +24,14 @@ export const UserProvider = ({ children }) => {
       } catch (e) {
         console.log(e);
       } finally {
-        setUserLoading(false);
+        setisUserLoading(false);
       }
     };
     checkLoggedInStatus();
   }, []);
 
   return (
-    <UserContext.Provider value={{ isLoggedIn, currentUser, setIsLoggedIn, setCurrentUser, userLoading }}>
+    <UserContext.Provider value={{ isLoggedIn, currentUser, setIsLoggedIn, setCurrentUser, isUserLoading }}>
       {children}
     </UserContext.Provider>
   );

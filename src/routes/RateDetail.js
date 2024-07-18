@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 
+import { NotFound } from './NotFound'; // NotFoundコンポーネントをインポート
 import { Loading } from '../components/Loading';
 import { PlayerRatedItem } from '../components/PlayerRatingItem';
 import { Comment } from '../components/Comment';
@@ -28,6 +29,7 @@ export const RateDetail = () => {
   const [res, setRes] = useState();
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState([]);
+  const [matchDate, setMatchData] = useState();
   const {currentUser} = useUser();
   const { rateId } = useParams();
 
@@ -35,12 +37,18 @@ export const RateDetail = () => {
 
   useEffect(() => {
     const fetchRateData = async () => {
-      const res = await getRate(rateId);
-      // console.log(JSON.stringify(res.data, null, 2));
-      setComments(res.data.comments.reverse());
-      delete res.data.comments
-      setRes(res.data);
-      setLoading(false);
+      try {
+        const res = await getRate(rateId);
+        // console.log(JSON.stringify(res.data, null, 2));
+        setMatchData(`PL ${res.data.season} 第${res.data.matchday}節`);
+        setComments(res.data.comments.reverse());
+        delete res.data.comments
+        setRes(res.data);
+      } catch (e) {
+        console.error('Error fetching rate:', e);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchRateData();
   }, [rateId]);
@@ -60,12 +68,13 @@ export const RateDetail = () => {
 
   // データが読み込まれるまでローディングを表示
   if (loading) {
-    return (
-      <Loading />
-    );
+    return <Loading />
   };
 
-  const matchDate = `PL ${res.season} 第${res.matchday}節`;
+  // matchDataが存在しない場合はNotFoundを返す
+  if(!res) {
+    return <NotFound/>
+  }
 
   return (
     <Box width="80%" mx="auto">

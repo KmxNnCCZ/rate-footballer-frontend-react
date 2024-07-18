@@ -8,30 +8,70 @@ import {
   Image,
   Text,
   Flex,
+  Select
 } from "@chakra-ui/react";
 
 import { StyledRank } from "../components/StyledRank";
 import { getPlayerRanking } from "../lib/api/fetchRanking";
 import { Loading } from "../components/Loading";
-import positionShortName from "../lib/PositionShortNames";
+import { positionShortName, positionMap } from "../lib/PositionShortNames";
 
 export const Ranking = () => {
-  const [ranking, setRanking] = useState([]);
+  const [originalRanking, setOriginalRanking] = useState([]); // 元のランキングデータ
+  const [ranking, setRanking] = useState([]); //絞り込み後のランキングデータ
   const [loading, setLoading] = useState(true); // 読み込み状態を管理するstate
+  // 検索用
+  const [teams, setTeams] = useState([]); // チーム一覧を管理するstate
+  const [selectedPosition, setSelectedPosition] = useState("");
+  const [selectedTeam, setSelectedTeam] = useState("");
 
+  const positions = ["GK", "DF", "MF", "FW"];
+  
   useEffect(() => {
     const fetchRanking = async () => {
       const res = await getPlayerRanking();
-      setRanking(res.data);
+      setOriginalRanking(res.data);
+      const teamsData = [];
+      res.data.forEach(player => {
+        if (!teamsData.includes(player.teamShortName)) {
+          teamsData.push(player.teamShortName);
+        }
+      });
+      setTeams(teamsData);
       setLoading(false);
-      // console.log(JSON.stringify(res.data, null, 2));
     };
     fetchRanking();
   }, []);
+  
+  useEffect(() => {
+    let filteredRanking = originalRanking
+    // ポジションでフィルタリング
+    if(selectedPosition) {
+      filteredRanking = filteredRanking.filter((player) => {
+        return positionMap[player.position] === selectedPosition;
+      });
+    }
+    // チームでフィルタリング
+    if(selectedTeam) {
+      filteredRanking = filteredRanking.filter((player) => {
+        return player.teamShortName === selectedTeam
+      })
+    }
+
+    setRanking(filteredRanking);
+  }, [selectedPosition, selectedTeam, originalRanking]);
 
   // データが読み込まれるまでローディングを表示
   if (loading) {
     return <Loading />;
+  }
+
+  const  onPositionSelectChange = (position) => {
+    setSelectedPosition(position);
+  }
+
+  const onTeamSelectChange = (team) => {
+    setSelectedTeam(team);
   }
 
   return (
@@ -43,6 +83,27 @@ export const Ranking = () => {
       <Text textAlign="center" fontSize="2xl" color="gray.700" fontWeight="bold" mb="8">
         ランキング
       </Text>
+
+      <Flex mb="20px" justifyContent="right">
+        {/* ポジション検索 */}
+        <Select  width="300px" mr="10px" onChange={(e) => onPositionSelectChange(e.target.value)}>
+          <option value="">ポジションを選択</option>
+          {positions.map((position) => (
+            <option key={position} value={position}>
+              {position}
+            </option>
+          ))}
+        </Select>
+        {/* チーム検索 */}
+        <Select  width="300px" mr="10px" onChange={(e) => onTeamSelectChange(e.target.value)}>
+          <option value="">チームを選択</option>
+          {teams.map((team) => (
+            <option key={team} value={team}>
+              {team}
+            </option>
+          ))}
+        </Select>
+      </Flex>
 
       <Box>
         <Grid templateColumns="repeat(auto-fit, minmax(200px, 1fr))" gap={6}>
@@ -62,8 +123,8 @@ export const Ranking = () => {
                     rank={i + 1}
                   />
                   <Flex alignItems="center" w="90%" mx="auto" my="10px">
-                    <Image src={player.crestUrl} alt={player.team} boxSize="50px" />
-                    <Text fontSize="sm" ml="auto" mt="20px" isTruncated>{player.shortName}</Text>
+                    <Image src={player.teamCrestUrl} alt={player.teamName} boxSize="50px" />
+                    <Text fontSize="sm" ml="auto" mt="20px" isTruncated>{player.teamShortName}</Text>
                   </Flex>
                   <Text fontSize="sm" color="gray.500">
                     {positionShortName[player.position]}

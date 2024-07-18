@@ -14,7 +14,7 @@ import {
   Box
 } from "@chakra-ui/react";
 
-import positionShortName from "../lib/PositionShortNames";
+import { positionShortName } from "../lib/PositionShortNames";
 
 export const PlayerRatingItem = ({ player, playerRate, index, onIncrement, onDecrement, onChangeAssessment, buttonWord }) => {
   return (
