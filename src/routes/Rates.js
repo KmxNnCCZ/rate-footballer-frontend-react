@@ -32,6 +32,7 @@ export const Rates = () => {
     const fetchRatesData = async () => {
       try {
         const rateList = await getRateList()
+        console.log(JSON.stringify(rateList, null, 2));
         // マイページから飛んできた時のmyPostsをtrueにする
         const queryParams = new URLSearchParams(location.search);
         const myPosts = queryParams.get('myPosts');
@@ -119,6 +120,8 @@ export const Rates = () => {
                 teamCrestUrl={rate.teamCrestUrl}
                 season={rate.season}
                 isOwner={isLoggedIn && currentUser.id === rate.userId}
+                userName={rate.userName}
+                updatedAt={rate.updatedAt}
               />
             </Link>
           </GridItem>
