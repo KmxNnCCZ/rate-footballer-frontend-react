@@ -24,7 +24,7 @@ import { MyPage } from './routes/MyPage';
 import { UpdatePassword } from './routes/UpdatePassword';
 import { UpdateUserInformation } from './routes/UpdateUserInformation';
 import { Ranking } from './routes/Ranking';
-import { NotFound } from './routes/NotFound';
+import { NotFound } from './routes/NotFound.js';
 
 import { Test } from './routes/Test';
 
