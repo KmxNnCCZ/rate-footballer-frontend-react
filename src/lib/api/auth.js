@@ -29,7 +29,7 @@ export const signOut = async (setIsLoggedIn, setCurrentUser) => {
     setCurrentUser(null);
     return res;
   } catch (e) {
-    console.log(e);
+    console.log("ログアウトに失敗しました。");
   }
 
 }

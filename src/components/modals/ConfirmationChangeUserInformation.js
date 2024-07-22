@@ -52,10 +52,8 @@ export const ConfirmationChangeUserInformation = ({ isOpen, onClose, name, email
       navigate("/")
     } catch (e) {
       if(e.response.data.errors) {
-        console.log(e.response.data.errors);
         if (e.response.data.errors.name) {
           setNameError(userNameErrorMessages[e.response.data.errors.name.join(" ")]);
-          console.log(e.response.data.errors.name)
         }
         if (e.response.data.errors.email) {
           setEmaiError(emailErrorMessages[e.response.data.errors.email.join(" ")])

@@ -29,7 +29,6 @@ export const Match = () => {
     const fetchMatch = async () => {
       try {
         const res = await getMatch(matchApiId);
-        // console.log(JSON.stringify(res, null, 2));
         setMatchData(res.data);
       } catch (e) {
         console.error("Error fetching match:", e);

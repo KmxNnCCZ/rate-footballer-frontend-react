@@ -32,7 +32,6 @@ export const Rates = () => {
     const fetchRatesData = async () => {
       try {
         const rateList = await getRateList()
-        console.log(JSON.stringify(rateList, null, 2));
         // マイページから飛んできた時のmyPostsをtrueにする
         const queryParams = new URLSearchParams(location.search);
         const myPosts = queryParams.get('myPosts');

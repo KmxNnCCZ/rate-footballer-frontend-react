@@ -39,7 +39,6 @@ export const RateDetail = () => {
     const fetchRateData = async () => {
       try {
         const res = await getRate(rateId);
-        // console.log(JSON.stringify(res.data, null, 2));
         setMatchData(`PL ${res.data.season} 第${res.data.matchday}節`);
         setComments(res.data.comments.reverse());
         delete res.data.comments;

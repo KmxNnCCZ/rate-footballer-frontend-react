@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
+import { SubmitButton, LoadingButton } from "../components/SubmitButton.js";
 import { updatePassword, hasPermission } from "../lib/api/changeUserInformation.js";
 import { passwordErrorMessages } from "../lib/errorMessages.js";
 import { useFlash } from "../contexts/FlashMessage.js";
@@ -21,6 +22,7 @@ import { useFlash } from "../contexts/FlashMessage.js";
 export const UpdatePassword = () => {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { setIsExistFlash, setFlashMessage } = useFlash();
 
   const [isRevealPassword, setIsRevealPassword] = useState(false);
@@ -45,6 +47,7 @@ export const UpdatePassword = () => {
 
   const fetchUpdatePassword = async () => {
     try {
+      setIsLoading(true);
       // もう一度登録ボタンを押した場合、エラーメッセージを初期化
       setPasswordError("");
       await updatePassword(token, password);
@@ -54,11 +57,12 @@ export const UpdatePassword = () => {
     } catch (e) {
       // これが機能していない
       if(e.response.data.errors) {
-        console.log(e.response.data.errors);
         if (e.response.data.errors.password) {
           setPasswordError(passwordErrorMessages[e.response.data.errors.password.join(" ")])
         }
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -91,21 +95,22 @@ export const UpdatePassword = () => {
         </FormControl>
       </Center>
       <Center>
-      <Button
-        as='button'
-        my="20px"
-        w="250px"
-        h="70px"
-        color="#89DA59"
-        bg="white"
-        borderColor='#89DA59'
-        borderRadius="10px"
-        borderWidth="4px"
-        _hover={{ bg: '#89DA59', color: "white" }}
-        onClick={fetchUpdatePassword}
-      >
-        変更する
-      </Button>
+        {isLoading ? (
+          <LoadingButton
+            width={"250px"}
+            h={"70px"}
+            borderRadius={"10px"}
+            content={"処理中"}
+          />
+        ) : (
+          <SubmitButton
+            w={"250px"}
+            h={"70px"}
+            borderRadius={"10px"}
+            onClick={fetchUpdatePassword}
+            content={"変更する"}
+          />
+        )}
       </Center>
     </Box>
 

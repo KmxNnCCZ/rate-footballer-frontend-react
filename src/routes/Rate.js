@@ -107,7 +107,7 @@ export const Rate = () => {
         await postRate(matchApiId, team, playerRates);
         navigate("/rates");
       } catch (e) {
-        console.log(e);
+        console.log("採点の投稿に失敗しました。", e);
         setIsExistFlash(true);
         setFlashMessage({type: "error", message: "投稿に失敗しました"});
       } finally {

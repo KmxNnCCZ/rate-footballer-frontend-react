@@ -56,16 +56,14 @@ export const SignUp = () => {
       navigate("/login");
     } catch (e) {
       if(e.response.data.errors) {
-        console.log(e.response.data.errors);
         if (e.response.data.errors.name) {
           setNameError(userNameErrorMessages[e.response.data.errors.name.join(" ")]);
-          console.log(e.response.data.errors.name)
         }
         if (e.response.data.errors.email) {
-          setEmaiError(emailErrorMessages[e.response.data.errors.email.join(" ")])
+          setEmaiError(emailErrorMessages[e.response.data.errors.email.join(" ")]);
         }
         if (e.response.data.errors.password) {
-          setPasswordError(passwordErrorMessages[e.response.data.errors.password.join(" ")])
+          setPasswordError(passwordErrorMessages[e.response.data.errors.password.join(" ")]);
         }
       }
     } finally {

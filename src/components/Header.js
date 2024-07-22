@@ -115,7 +115,7 @@ export const Header = () => {
 
   const fetchSignOut = async () => {
     const res = await signOut(setIsLoggedIn, setCurrentUser);
-    console.log(res.status);
+
     if(res.status === 200) {
       setIsExistFlash(true);
       setFlashMessage({type: "success", message: "ログアウトしました"});

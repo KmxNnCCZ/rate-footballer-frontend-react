@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
           setCurrentUser(filteredUser);
         }
       } catch (e) {
-        console.log(e);
+        console.log("ログイン情報の取得に失敗しました。");
       } finally {
         setisUserLoading(false);
       }
