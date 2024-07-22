@@ -17,7 +17,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import { useFlash } from "../contexts/FlashMessage.js";
 import { signUp } from "../lib/api/auth.js";
-import { SubmitButton } from "../components/SubmitButton.js";
+import { SubmitButton, LoadingButton } from "../components/SubmitButton.js";
 import { userNameErrorMessages, emailErrorMessages, passwordErrorMessages } from "../lib/errorMessages.js";
 
 export const SignUp = () => {
@@ -27,6 +27,7 @@ export const SignUp = () => {
   const [nameError, setNameError] = useState("");
   const [emaiError, setEmaiError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { setIsExistFlash, setFlashMessage } = useFlash();
 
   const [isRevealPassword, setIsRevealPassword] = useState(false);
@@ -44,6 +45,7 @@ export const SignUp = () => {
 
   const register = async () => {
     try {
+      setIsLoading(true);
       // もう一度登録ボタンを押した場合、エラーメッセージを初期化
       setNameError("");
       setEmaiError("");
@@ -66,6 +68,8 @@ export const SignUp = () => {
           setPasswordError(passwordErrorMessages[e.response.data.errors.password.join(" ")])
         }
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -120,13 +124,22 @@ export const SignUp = () => {
         </FormControl>
       </Center>
       <Center>
-      <SubmitButton
-        width={"250px"}
-        height={"70px"}
-        borderRadius={"10px"}
-        onClick={register}
-        content={"登録する"}
-      />
+      {isLoading ? (
+          <LoadingButton
+            width={"250px"}
+            h={"70px"}
+            borderRadius={"10px"}
+            content={"処理中"}
+          />
+        ) : (
+          <SubmitButton
+            width={"250px"}
+            height={"70px"}
+            borderRadius={"10px"}
+            onClick={register}
+            content={"登録する"}
+          />
+        )}
       </Center>
       <Box textAlign="right" color="blue.500">
         <Link to="/login">ログインはこちら</Link>
