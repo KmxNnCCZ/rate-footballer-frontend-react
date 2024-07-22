@@ -18,12 +18,13 @@ import { Loading } from "../components/Loading";
 import { useUser } from '../contexts/UserContext.js';
 import { useFlash } from '../contexts/FlashMessage.js';
 import { signIn } from '../lib/api/auth.js'
-import { SubmitButton } from '../components/SubmitButton.js';
+import { SubmitButton, LoadingButton } from '../components/SubmitButton.js';
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRevealPassword, setIsRevealPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { isLoggedIn, setIsLoggedIn, setCurrentUser, isUserLoading } = useUser();
   const { setIsExistFlash, setFlashMessage } = useFlash();
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ export const Login = () => {
 
   const fetchLogin = async () => {
     try {
+      setIsLoading(true);
       const res = await signIn({ email, password });
       // レスポンスをもとにクッキーをセット
       Cookies.set("_access_token", res.data.data.accessToken);
@@ -51,9 +53,10 @@ export const Login = () => {
       setFlashMessage({type: "success", message: "ログインしました"});
       navigate("/")
     } catch (e) {
-      console.log(e);
       setIsExistFlash(true);
       setFlashMessage({type: "error", message: "ログインに失敗しました"});
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -101,13 +104,22 @@ export const Login = () => {
         </InputGroup>
       </Center>
       <Center>
-      <SubmitButton
-        width={"250px"}
-        h={"70px"}
-        borderRadius={"10px"}
-        onClick={fetchLogin}
-        content={"ログイン"}
-      />
+        {isLoading ? (
+          <LoadingButton
+            width={"250px"}
+            h={"70px"}
+            borderRadius={"10px"}
+            content={"処理中"}
+          />
+        ) : (
+          <SubmitButton
+            width={"250px"}
+            h={"70px"}
+            borderRadius={"10px"}
+            onClick={fetchLogin}
+            content={"ログイン"}
+          />
+        )}
       </Center>
       <Box textAlign="right" color="blue.500">
         <Link to="/signUp">新規登録はこちら</Link>

@@ -1,4 +1,5 @@
 // プライバシーポリシー
+import { useEffect } from "react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
@@ -60,7 +61,12 @@ const GrandChildUnorderedList = ({ children }) => {
 }
 
 
-export const PrivacyPolicy = ({ children }) => {
+export const PrivacyPolicy = () => {
+  // ページが読み込まれたときスクロール位置をトップにする
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Box
       w="85%"

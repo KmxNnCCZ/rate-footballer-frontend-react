@@ -13,19 +13,21 @@ import {
 
 import { Loading } from "../components/Loading";
 import { PlayerRatingItem } from "../components/PlayerRatingItem";
-import { SubmitButton } from "../components/SubmitButton";
+import { SubmitButton, LoadingButton } from "../components/SubmitButton";
 import { useUser } from "../contexts/UserContext";
+import { useFlash } from '../contexts/FlashMessage.js';
 import { getTeam } from "../lib/api/fetchMatch";
 import { postRate } from "../lib/api/fetchRate";
 
 
 export const Rate = () => {
-
   const { matchApiId } = useParams();
   const { isLoggedIn, isUserLoading } = useUser();
   const [teamData, setTeamData] = useState({});
   const [loading, setLoading] = useState(true);
   const [ team, setTeam ] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { setIsExistFlash, setFlashMessage } = useFlash();
   const navigate = useNavigate();
 
   const [playerRates, setPlayerRates] = useState([]);
@@ -100,8 +102,17 @@ export const Rate = () => {
 
   const postRateData = async () => {
     if(isLoggedIn) {
-      await postRate(matchApiId, team, playerRates);
-      navigate("/rates");
+      try {
+        setIsLoading(true);
+        await postRate(matchApiId, team, playerRates);
+        navigate("/rates");
+      } catch (e) {
+        console.log(e);
+        setIsExistFlash(true);
+        setFlashMessage({type: "error", message: "投稿に失敗しました"});
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -156,13 +167,22 @@ export const Rate = () => {
           ))}
         </Accordion>
 
-        <SubmitButton
-          width={"50%"}
-          height={"70px"}
-          borderRadius={"20px"}
-          onClick={postRateData}
-          content={"投稿する"}
-        />
+        {isLoading ? (
+          <LoadingButton
+            width={"50%"}
+            h={"70px"}
+            borderRadius={"20px"}
+            content={"処理中"}
+          />
+        ) : (
+          <SubmitButton
+            width={"50%"}
+            height={"70px"}
+            borderRadius={"20px"}
+            onClick={postRateData}
+            content={"投稿する"}
+          />
+        )}
       </Box>
     </Box>
   );

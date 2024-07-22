@@ -1,4 +1,7 @@
 // 利用規約ページ
+import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
+
 import {
   Text,
   Heading,
@@ -6,8 +9,7 @@ import {
   VStack,
   UnorderedList,
   ListItem,
-} from "@chakra-ui/react"
-import { Helmet } from "react-helmet-async";
+} from "@chakra-ui/react";
 
 const Article = ({ children }) => {
   return (
@@ -49,6 +51,11 @@ const ChildUnorderedList = ({ children }) => {
 }
 
 export const TermOfUse = () => {
+  // ページが読み込まれたときスクロール位置をトップにする
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Box
       w="85%"
